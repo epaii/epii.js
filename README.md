@@ -231,7 +231,8 @@ https://epaii.github.io/epii.js/demo/demo2.html
 </script>
 ```
 
-# 8 数据获取，获取已设置的数据，getDataValue
+# 8 数据获取，获取已设置的数据，getData,getDataValue连个方法
+* 通过 epii 的 getData 方法 可以获取所有设置的数据
 * 通过  epii的 getDataValue 方法 可以快速获取已设置的数据，getDataValue 支持多参数，链条key
 * 如 myepii.getDataValue("title");  myepii.getDataValue("info","subject");   myepii.getDataValue("users",1,"age")
 * 以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo8.html

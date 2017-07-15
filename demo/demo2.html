@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../epii.js"></script>
+</head>
+<body>
+<div id="content">
+    <h1 r-data="title" style="width: {h1_width}px;height: {h1_height}px;background-color: {h1_color}">
+    </h1>
+    <br>
+    <img r-data="img_url" style="width: {img_width}px">
+
+</div>
+<script>
+    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+
+    myepii.setData({
+        h1_width:100,
+        h1_height:100,
+        h1_color:"red",
+        title: "我是标题",
+
+
+        img_url:"https://www.baidu.com/img/bd_logo1.png",
+        img_width:100
+    });
+
+    setTimeout(function () {
+        myepii.setData({
+            title: "我是新的标题",
+            h1_width:300,
+            h1_height:300,
+            h1_color:"blue",
+            img_width:300
+        });
+    }, 3000);
+</script>
+</body>
+</html>

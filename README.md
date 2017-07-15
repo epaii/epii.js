@@ -3,15 +3,15 @@
 # epii.js是什么
 epii.js是一个 模板数据绑定和事件绑定的快速实现工具，不依赖任何第三方库,仅仅8k。
 
-> * 1,[基础数据绑定](https://github.com/epaii/epii.js/blob/master/README.md#1基础数据绑定)
-> * 2 数据绑定其它语法
-> * 3 节点的隐藏/显示
-> * 4 列表（基础）
-> * 5 列表（多模板）
-> * 6 列表（追加数据）
-> * 7 列表（空数据）
-> * 8 数据获取，获取已设置的数据，getData,getDataValue连个方法
-> * 9 完整的demo，几乎涉及所有语法
+> * [1 基础数据绑定](https://github.com/epaii/epii.js#1基础数据绑定)
+> * [2 数据绑定其它语法](https://github.com/epaii/epii.js#2-数据绑定其它语法)
+> * [3 节点的隐藏/显示](https://github.com/epaii/epii.js#3-节点的隐藏显示)
+> * [4 列表（基础）](https://github.com/epaii/epii.js#4-列表基础)
+> * [5 列表（多模板）](https://github.com/epaii/epii.js#5-列表多模板)
+> * [6 列表（追加数据）](https://github.com/epaii/epii.js#6-列表追加数据)
+> * [7 列表（空数据）](https://github.com/epaii/epii.js#7-列表空数据)
+> * [8 数据获取，获取已设置的数据，getData,getDataValue连个方法](https://github.com/epaii/epii.js#8-数据获取获取已设置的数据getdatagetdatavalue连个方法)
+> * [9 完整的demo，几乎涉及所有语法](https://github.com/epaii/epii.js#9-完整的demo几乎涉及所有语法)
 
 # 1,基础数据绑定
 * epii 自定义dom节点属性 r-data 可以对任何类型节点赋值，其中 input 节点最终 赋值其value 属性，img节点赋值其 src 属性，其它类型节点均赋值innerHtml 属性。

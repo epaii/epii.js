@@ -3,7 +3,7 @@ epii.js是一个 模板数据绑定和事件绑定的快速实现工具，不依
 
 
 # 1基础数据绑定
-epii 自定义dom节点属性 r-data 可以对任何类型节点赋值，其中 input 节点最终 赋值其value 属性，img节点赋值其 src 属性，其它类型节点均赋值innerHtml 属性，以下代码效果可在此处预览（https://github.com/epaii/epii.js/blob/master/demo/demo1.html）
+epii 自定义dom节点属性 r-data 可以对任何类型节点赋值，其中 input 节点最终 赋值其value 属性，img节点赋值其 src 属性，其它类型节点均赋值innerHtml 属性，以下代码效果可在此处预览 https://github.com/epaii/epii.js/blob/master/demo/demo1.html
 ```javascript
 <div id="content">
     <h1 r-data="title">

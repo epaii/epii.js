@@ -155,6 +155,77 @@ epii.js是一个 模板数据绑定和事件绑定的快速实现工具，不依
 
 </script>
 ```
+# 6 列表（追加数据）
+* epii 可两种方式对列表追加数据
+* 方法1 ，重新 setData, 将重新显示列表所有数据，如果旧数据有改变，则用这种方法
+* 方法2 ， addData ，已有数据不变，追加数据，如果旧数据没有任何改变，推荐使用这种方式
+* 以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo6.html
+```javascript
+<div id="content">
+    <h1 r-data="title" >  </h1>
+    <div r-list="users">
+        <div r-display="{item_type}-1==0" style="background-color: blueviolet">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+        <div r-display="{item_type}-2==0" style="background-color: red">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+    </div>
+</div>
+<script>
+    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+    myepii.setData({
+        title: "列表展示",
+        users:[
+            {name:"张三",age:"12岁",item_type:1},
+            {name:"李四",age:"14岁",item_type:2},
+            {name:"张三1",age:"121岁",item_type:1},
+            {name:"李四1",age:"141岁",item_type:2}
+        ]
+    });
+    setTimeout(function () {//3秒后追加列表
+        myepii.addData({ //追加已有数据，列表将别追加，其它类型直接覆盖
+            title: "追加列表展示",
+            users:[
+                {name:"张三5",age:"12岁",item_type:1},
+                {name:"李四6",age:"14岁",item_type:2},
+                {name:"张三7",age:"121岁",item_type:1},
+                {name:"李四8",age:"141岁",item_type:2}
+            ]
+        });
+
+    },3000);
+
+</script>
+```
+# 7 列表（空数据）
+通过 r-empty="1" 设置当数据为空，或者未设置时候列表的样式，以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo7.html
+```javascript
+<div id="content">
+    <h1 r-data="title" >  </h1>
+    <div r-list="users">
+        <div r-display="{item_type}-1==0" style="background-color: blueviolet">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+        <div r-display="{item_type}-2==0" style="background-color: red">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+        <div r-empty="1" style="background-color: cadetblue">没有数据的时候显示</div>
+    </div>
+</div>
+<script>
+    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+    myepii.setData({
+        title: "列表展示",
+        users:[]
+    });
+    setTimeout(function () {//3秒后追加列表
+        myepii.addData({ //追加已有数据，列表将别追加，其它类型直接覆盖
+            title: "追加列表展示",
+            users:[
+                {name:"张三5",age:"12岁",item_type:1},
+                {name:"李四6",age:"14岁",item_type:2},
+                {name:"张三7",age:"121岁",item_type:1},
+                {name:"李四8",age:"141岁",item_type:2}
+            ]
+        });
+
+    },3000);
+
+</script>
+```
 # 5 完整的demo，几乎涉及所有语法
 
 #demo案例源码:(https://github.com/epaii/epii.js/blob/master/index.html)

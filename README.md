@@ -1,7 +1,9 @@
 # epii.js是什么
 epii.js是一个 模板数据绑定和事件绑定的快速实现工具，不依赖任何第三方库,仅仅8k。
 
-demo案例:(https://epaii.github.io/epii.js/index.html)
+#demo案例源码:(https://github.com/epaii/epii.js/blob/master/index.html)
+
+#demo案例效果:(https://epaii.github.io/epii.js/index.html)
 
 ```html
 

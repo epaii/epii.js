@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../epii.js"></script>
+</head>
+<body>
+<div id="content">
+    <h1 r-data="title" >  </h1>
+    <div r-list="users">
+        <div r-display="{item_type}-1==0" style="background-color: blueviolet">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+        <div r-display="{item_type}-2==0" style="background-color: red">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+    </div>
+</div>
+<script>
+    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+
+    myepii.setData({
+        title: "获取数据",
+        info:{subject:"标题"},
+        users:[
+            {name:"张三",age:"12岁",item_type:1},
+            {name:"李四",age:"14岁",item_type:2},
+            {name:"张三1",age:"121岁",item_type:1},
+            {name:"李四1",age:"141岁",item_type:2}
+        ]
+    });
+    console.log(myepii.getData());
+    alert(myepii.getDataValue("title"));
+    alert(myepii.getDataValue("info","subject"));
+    alert(myepii.getDataValue("users",1,"age"));
+</script>
+</body>
+</html>

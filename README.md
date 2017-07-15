@@ -1,6 +1,41 @@
 # epii.js是什么
 epii.js是一个 模板数据绑定和事件绑定的快速实现工具，不依赖任何第三方库,仅仅8k。
 
+
+# 1基础数据绑定
+epii 自定义dom节点属性 r-data 可以对任何类型节点赋值，其中 input 节点最终 赋值其value 属性，img节点赋值其 src 属性，其它类型节点均赋值innerHtml 属性，以下代码效果可在此处预览（https://github.com/epaii/epii.js/blob/master/demo/demo1.html）
+```javascript
+<div id="content">
+    <h1 r-data="title">
+    </h1>
+    <div r-data="文章内容：{content}"></div>
+    <br>
+    <input r-data="inputvalue"><!-- input 负值方法1-->
+    <input value="{inputvalue}"><!-- input 负值方法2-->
+    <br>
+    <img r-data="img_url" style="width: {img_width}px"><!-- img 负值方法1-->
+    <img src="{img_url}" style="width: {img_width}px"><!-- img 负值方法2  ,但这种存在缺点，因为在解析前，已经加载一次不存在的图片，多一次请求，不推荐-->
+</div>
+<script>
+    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+
+    myepii.setData({
+        title: "我是标题",
+        content: "我是内容主题",
+        inputvalue: "input内容",
+        img_url:"https://www.baidu.com/img/bd_logo1.png",
+        img_width:100
+    });
+
+    setTimeout(function () {
+        myepii.setData({
+            title: "我是新的标题",
+            content: "我是新的内容主题"
+        });
+    }, 3000);
+</script>
+```
+
 #demo案例源码:(https://github.com/epaii/epii.js/blob/master/index.html)
 
 #demo案例效果:(https://epaii.github.io/epii.js/index.html)

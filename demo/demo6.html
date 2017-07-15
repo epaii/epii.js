@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../epii.js"></script>
+</head>
+<body>
+<div id="content">
+    <h1 r-data="title" >  </h1>
+    <div r-list="users">
+        <div r-display="{item_type}-1==0" style="background-color: blueviolet">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+        <div r-display="{item_type}-2==0" style="background-color: red">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+    </div>
+</div>
+<script>
+    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+    myepii.setData({
+        title: "列表展示",
+        users:[
+            {name:"张三",age:"12岁",item_type:1},
+            {name:"李四",age:"14岁",item_type:2},
+            {name:"张三1",age:"121岁",item_type:1},
+            {name:"李四1",age:"141岁",item_type:2}
+        ]
+    });
+    setTimeout(function () {//3秒后追加列表
+        myepii.addData({ //追加已有数据，列表将别追加，其它类型直接覆盖
+            title: "追加列表展示",
+            users:[
+                {name:"张三5",age:"12岁",item_type:1},
+                {name:"李四6",age:"14岁",item_type:2},
+                {name:"张三7",age:"121岁",item_type:1},
+                {name:"李四8",age:"141岁",item_type:2}
+            ]
+        });
+
+    },3000);
+
+</script>
+</body>
+</html>

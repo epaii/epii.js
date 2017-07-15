@@ -76,10 +76,11 @@ epii.js是一个 模板数据绑定和事件绑定的快速实现工具，不依
     }, 3000);
 </script>
 ```
-# 2 节点的隐藏/显示
+# 3 节点的隐藏/显示
 * epii 提共两种方式设置dom节点隐藏和显示
-* 1 ，style="display: {h1_display}"  通过style 属性绑定
-* 2 ， 通过 r-display 标签 r-display="{img_show}-1==0"，必须为bool 等式字符串 ，推荐使用这种方式
+* 方法1 ，style="display: {h1_display}"  通过style 属性绑定
+* 方法2 ， 通过 r-display 标签 r-display="{img_show}-1==0"，必须为bool 等式字符串 ，推荐使用这种方式
+* 以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo3.html
 ```javascript
 <div id="content">
     <h1 r-data="title" style="display: {h1_display}"> <!--第一种方法，直接在style中 用变量，不推荐-->
@@ -105,6 +106,53 @@ epii.js是一个 模板数据绑定和事件绑定的快速实现工具，不依
             img_show:0
         });
     }, 3000);
+</script>
+```
+# 4 列表（基础）
+* epii 通过 r-list 标签指定此dom节点将显示列表， 在列表节点内的 变量 将自切换为 列表某一项数据，在列表内之前所有标签,以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo4.html
+```javascript
+<div id="content">
+    <h1 r-data="title" >  </h1>
+    <div r-list="users">
+        <div>名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+    </div>
+</div>
+<script>
+    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+
+    myepii.setData({
+        title: "列表展示",
+        users:[
+            {name:"张三",age:"12岁"},
+            {name:"李四",age:"14岁"}
+        ]
+    });
+
+</script>
+```
+# 5 列表（多模板）
+* 如果列表中有多个模板，则根据r-display 来自动选择对应的模板,以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo5.html
+```javascript
+<div id="content">
+    <h1 r-data="title" >  </h1>
+    <div r-list="users">
+        <div r-display="{item_type}-1==0" style="background-color: blueviolet">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+        <div r-display="{item_type}-2==0" style="background-color: red">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+    </div>
+</div>
+<script>
+    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+
+    myepii.setData({
+        title: "列表展示",
+        users:[
+            {name:"张三",age:"12岁",item_type:1},
+            {name:"李四",age:"14岁",item_type:2},
+            {name:"张三1",age:"121岁",item_type:1},
+            {name:"李四1",age:"141岁",item_type:2}
+        ]
+    });
+
 </script>
 ```
 # 5 完整的demo，几乎涉及所有语法

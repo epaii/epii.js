@@ -41,7 +41,7 @@ epii.js是一个 模板数据绑定和事件绑定的快速实现工具，不依
 </script>
 ```
 # 2 数据绑定其它语法
-epii 可以实现dom节点 属性的变量绑定，可以在任意属性中使用变量标签，比如 style ，width，等任意属性,以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo2.html
+* epii 可以实现dom节点 属性的变量绑定，可以在任意属性中使用变量标签，比如 style ，width，等任意属性,以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo2.html
 
 ```javascript
 <div id="content">
@@ -76,7 +76,37 @@ epii 可以实现dom节点 属性的变量绑定，可以在任意属性中使�
     }, 3000);
 </script>
 ```
+# 2 节点的隐藏/显示
+* epii 提共两种方式设置dom节点隐藏和显示
+* 1 ，style="display: {h1_display}"  通过style 属性绑定
+* 2 ， 通过 r-display 标签 r-display="{img_show}-1==0"，必须为bool 等式字符串 ，推荐使用这种方式
+```javascript
+<div id="content">
+    <h1 r-data="title" style="display: {h1_display}"> <!--第一种方法，直接在style中 用变量，不推荐-->
+    </h1>
+    <br>
+    <img r-data="img_url" r-display="{img_show}-1==0"><!--第二种方法，使用 r-display 标签，推荐-->
 
+</div>
+<script>
+    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+
+    myepii.setData({
+        title: "我是标题",
+        h1_display:"block",
+
+        img_url:"https://www.baidu.com/img/bd_logo1.png",
+        img_show:1
+    });
+
+    setTimeout(function () {//两种方法隐藏
+        myepii.setData({
+            h1_display:"none",
+            img_show:0
+        });
+    }, 3000);
+</script>
+```
 # 5 完整的demo，几乎涉及所有语法
 
 #demo案例源码:(https://github.com/epaii/epii.js/blob/master/index.html)

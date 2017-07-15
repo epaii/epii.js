@@ -41,14 +41,17 @@ epii.js是一个 模板数据绑定和事件绑定的快速实现工具，不依
 </script>
 ```
 # 2 数据绑定其它语法
-* epii 可以实现dom节点 属性的变量绑定，可以在任意属性中使用变量标签，比如 style ，width，等任意属性,以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo2.html
+* epii 可以实现dom节点 属性的变量绑定，可以在任意属性中使用变量标签，比如 style ，width，等任意属性,以下代码效果可在此处预览 
+* 支持 链条式变量，比如 {info.subject}  
+https://epaii.github.io/epii.js/demo/demo2.html
 
 ```javascript
 <div id="content">
     <h1 r-data="title" style="width: {h1_width}px;height: {h1_height}px;background-color: {h1_color}">
     </h1>
+    <div r-data="{info.subject}"></div>
     <br>
-    <img r-data="img_url" style="width: {img_width}px">
+    <img r-data="{img.img_url}" style="width: {img.img_width}px">
 
 </div>
 <script>
@@ -59,10 +62,11 @@ epii.js是一个 模板数据绑定和事件绑定的快速实现工具，不依
         h1_height:100,
         h1_color:"red",
         title: "我是标题",
-
-
-        img_url:"https://www.baidu.com/img/bd_logo1.png",
-        img_width:100
+        info:{subject:"文章简介"},
+        img:{
+            img_url: "https://www.baidu.com/img/bd_logo1.png",
+            img_width: 100
+        }
     });
 
     setTimeout(function () {
@@ -71,7 +75,7 @@ epii.js是一个 模板数据绑定和事件绑定的快速实现工具，不依
             h1_width:300,
             h1_height:300,
             h1_color:"blue",
-            img_width:300
+            img:{  img_width:300}
         });
     }, 3000);
 </script>
@@ -226,7 +230,38 @@ epii.js是一个 模板数据绑定和事件绑定的快速实现工具，不依
 
 </script>
 ```
-# 5 完整的demo，几乎涉及所有语法
+
+# 8 列表（空数据）
+* 通过  epii的 getDataValue 方法 可以快速获取已设置的数据，getDataValue 支持多参数，链条key
+* 如 myepii.getDataValue("title");  myepii.getDataValue("info","subject");   myepii.getDataValue("users",1,"age")
+* 以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo8.html
+```javascript
+<div id="content">
+    <h1 r-data="title" >  </h1>
+    <div r-list="users">
+        <div r-display="{item_type}-1==0" style="background-color: blueviolet">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+        <div r-display="{item_type}-2==0" style="background-color: red">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+    </div>
+</div>
+<script>
+    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+
+    myepii.setData({
+        title: "获取数据",
+        info:{subject:"标题"},
+        users:[
+            {name:"张三",age:"12岁",item_type:1},
+            {name:"李四",age:"14岁",item_type:2},
+            {name:"张三1",age:"121岁",item_type:1},
+            {name:"李四1",age:"141岁",item_type:2}
+        ]
+    });
+    alert(myepii.getDataValue("title"));
+    alert(myepii.getDataValue("info","subject"));
+    alert(myepii.getDataValue("users",1,"age"));
+</script>
+```
+# 9 完整的demo，几乎涉及所有语法
 
 #demo案例源码:(https://github.com/epaii/epii.js/blob/master/index.html)
 

@@ -18,23 +18,7 @@
 
     var click_change_function = function (url) {
         window.location.href = url;
-    }, enable_r_tag_show = false, $_templateParser = function (key, key_path) {
-        if (key_path[0].indexOf("_G_") === 0) {
-
-            return unescape(gLocalData.get(key_path[0].substr(3)));
-        } else if (key_path[0].indexOf("_GET_") === 0) {
-            return $_GET[key_path[0].substr(5)];
-        } else if (key_path[0].indexOf("_GU_") === 0) {
-
-            return unescape(getGlocalDataUser().get(arguments[1].substr(4)));
-
-        } else if (key_path[0].indexOf("_WINDOW_") === 0) {
-            return window[key_path[0].substr(8)];
-        } else if (key.indexOf(".") > -1 || key.indexOf("(") > -1 || key.indexOf(";") > -1) {
-            return key;
-        }
-        return undefined;
-    };
+    }, enable_r_tag_show = false, $_templateParser =null;
 
     function getValueByKeyPath(data, keypaths) {
         var i = 0, out = data[keypaths[i++]], len = keypaths.length;
@@ -65,7 +49,7 @@
                         return $_templateParser(arguments[1], key_path)
                     }
 
-                    return "";
+                    return undefined;
                 }
             });
         } else {
@@ -244,7 +228,7 @@
 
 
                 var v = $templateParser(value, data);
-
+                console.log(v);
                 if (v == undefined || v == "undefined") {
                     if (defaultvalue) {
                         v = $templateParser(defaultvalue,data);
@@ -253,7 +237,7 @@
                         v = "";
                     }
                 }
-                if (v) {
+                if (v.length>0) {
                     var tagname = view.tagName.toLowerCase();
                     if (tagname == "input") {
                         view.value = v;

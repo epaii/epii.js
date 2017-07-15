@@ -3,12 +3,17 @@ epii.js是一个 模板数据绑定和事件绑定的快速实现工具，不依
 
 
 # 1,基础数据绑定
-epii 自定义dom节点属性 r-data 可以对任何类型节点赋值，其中 input 节点最终 赋值其value 属性，img节点赋值其 src 属性，其它类型节点均赋值innerHtml 属性，以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo1.html
+* epii 自定义dom节点属性 r-data 可以对任何类型节点赋值，其中 input 节点最终 赋值其value 属性，img节点赋值其 src 属性，其它类型节点均赋值innerHtml 属性。
+* 如果设置r-data-default 则在没有数据时候显示默认值。
+* r-data="title"  和 r-data="{title}" 的区别是，在title值不存在时，第一种情况 将显示 title 字符串，第二种情况 显示空，如果第二种情况设置了r-data-default 则显示其设置的默认值
+* 以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo1.html
 ```javascript
 <div id="content">
     <h1 r-data="title">
     </h1>
     <div r-data="文章内容：{content}"></div>
+    <br>
+     <div r-data="{subject}" r-data-default="没有被赋值，只能用：{title}"></div><!-- 默认值-->
     <br>
     <input r-data="inputvalue"><!-- input 负值方法1-->
     <input value="{inputvalue}"><!-- input 负值方法2-->

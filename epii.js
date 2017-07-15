@@ -228,7 +228,7 @@
 
 
                 var v = $templateParser(value, data);
-                console.log(v);
+               
                 if (v == undefined || v == "undefined") {
                     if (defaultvalue) {
                         v = $templateParser(defaultvalue,data);

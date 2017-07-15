@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../epii.js"></script>
+</head>
+<body>
+<div id="content">
+    <h1 r-data="title" style="display: {h1_display}"> <!--第一种方法，直接在style中 用变量，不推荐-->
+    </h1>
+    <br>
+    <img r-data="img_url" r-display="{img_show}-1==0"><!--第二种方法，使用 r-display 标签，推荐-->
+
+</div>
+<script>
+    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+
+    myepii.setData({
+        title: "我是标题",
+        h1_display:"block",
+
+        img_url:"https://www.baidu.com/img/bd_logo1.png",
+        img_show:1
+    });
+
+    setTimeout(function () {//两种方法隐藏
+        myepii.setData({
+            h1_display:"none",
+            img_show:0
+        });
+    }, 3000);
+</script>
+</body>
+</html>

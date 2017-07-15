@@ -2,8 +2,8 @@
 epii.js是一个 模板数据绑定和事件绑定的快速实现工具，不依赖任何第三方库,仅仅8k。
 
 
-# 1基础数据绑定
-epii 自定义dom节点属性 r-data 可以对任何类型节点赋值，其中 input 节点最终 赋值其value 属性，img节点赋值其 src 属性，其它类型节点均赋值innerHtml 属性，以下代码效果可在此处预览 https://github.com/epaii/epii.js/blob/master/demo/demo1.html
+# 1,基础数据绑定
+epii 自定义dom节点属性 r-data 可以对任何类型节点赋值，其中 input 节点最终 赋值其value 属性，img节点赋值其 src 属性，其它类型节点均赋值innerHtml 属性，以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo1.html
 ```javascript
 <div id="content">
     <h1 r-data="title">
@@ -35,6 +35,44 @@ epii 自定义dom节点属性 r-data 可以对任何类型节点赋值，其中 
     }, 3000);
 </script>
 ```
+# 2 数据绑定其它语法
+epii 可以实现dom节点 属性的变量绑定，可以在任意属性中使用变量标签，比如 style ，width，等任意属性,以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo2.html
+
+```javascript
+<div id="content">
+    <h1 r-data="title" style="width: {h1_width}px;height: {h1_height}px;background-color: {h1_color}">
+    </h1>
+    <br>
+    <img r-data="img_url" style="width: {img_width}px">
+
+</div>
+<script>
+    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+
+    myepii.setData({
+        h1_width:100,
+        h1_height:100,
+        h1_color:"red",
+        title: "我是标题",
+
+
+        img_url:"https://www.baidu.com/img/bd_logo1.png",
+        img_width:100
+    });
+
+    setTimeout(function () {
+        myepii.setData({
+            title: "我是新的标题",
+            h1_width:300,
+            h1_height:300,
+            h1_color:"blue",
+            img_width:300
+        });
+    }, 3000);
+</script>
+```
+
+# 5 完整的demo，几乎涉及所有语法
 
 #demo案例源码:(https://github.com/epaii/epii.js/blob/master/index.html)
 

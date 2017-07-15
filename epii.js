@@ -182,7 +182,7 @@
 
                         var listdata = data[group[i].key];
 
-                        if (listdata === undefined || listdata === null) {
+                        if (listdata === undefined || listdata === null || listdata.length==0) {
 
                             group[i].view.appendChild(group[i].empty_view);
                             group[i].view['is_empty'] = true;

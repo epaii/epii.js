@@ -231,7 +231,7 @@ https://epaii.github.io/epii.js/demo/demo2.html
 </script>
 ```
 
-# 8 列表（空数据）
+# 8 数据获取，获取已设置的数据，getDataValue
 * 通过  epii的 getDataValue 方法 可以快速获取已设置的数据，getDataValue 支持多参数，链条key
 * 如 myepii.getDataValue("title");  myepii.getDataValue("info","subject");   myepii.getDataValue("users",1,"age")
 * 以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo8.html
@@ -256,6 +256,7 @@ https://epaii.github.io/epii.js/demo/demo2.html
             {name:"李四1",age:"141岁",item_type:2}
         ]
     });
+    console.log(myepii.getData());
     alert(myepii.getDataValue("title"));
     alert(myepii.getDataValue("info","subject"));
     alert(myepii.getDataValue("users",1,"age"));

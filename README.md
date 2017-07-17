@@ -36,7 +36,7 @@
     <img src="{img_url}" style="width: {img_width}px"><!-- img 负值方法2  ,但这种存在缺点，因为在解析前，已经加载一次不存在的图片，多一次请求，不推荐-->
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+    var myepii = epii(document.getElementById("content"));//初始化引擎，需要指定dom节点 可以是 body
 
     myepii.setData({
         title: "我是标题",
@@ -69,7 +69,7 @@ https://epaii.github.io/epii.js/demo/demo2.html
 
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化引擎，需要制定dom节点 可以是 body
+    var myepii = epii(document.getElementById("content"));//初始化引擎，需要指定dom节点 可以是 body
 
     myepii.setData({
         h1_width:100,
@@ -108,8 +108,7 @@ https://epaii.github.io/epii.js/demo/demo2.html
 
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化引擎，需要制定dom节点 可以是 body
-
+    var myepii = epii(document.getElementById("content"));//初始化引擎，需要指定dom节点 可以是 body
     myepii.setData({
         title: "我是标题",
         h1_display:"block",
@@ -149,7 +148,7 @@ https://epaii.github.io/epii.js/demo/demo2.html
     </div>
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化引擎，需要制定dom节点 可以是 body
+    var myepii = epii(document.getElementById("content"));//初始化引擎，需要指定dom节点 可以是 body
 
     myepii.setData({
         title: "列表展示",
@@ -185,7 +184,7 @@ epii.setClickToChangeFunction(function (url) {
         console.log(url);
     });
 
-    var myepii = epii(document.getElementById("content"));//初始化引擎，需要制定dom节点 可以是 body
+    var myepii = epii(document.getElementById("content"));//初始化引擎，需要指定dom节点 可以是 body
 
     myepii.setData({
         title: "列表展示",
@@ -202,7 +201,7 @@ epii.setClickToChangeFunction(function (url) {
     </div>
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化引擎，需要制定dom节点 可以是 body
+    var myepii = epii(document.getElementById("content"));//初始化引擎，需要指定dom节点 可以是 body
 
     myepii.setData({
         title: "列表展示",
@@ -225,7 +224,7 @@ epii.setClickToChangeFunction(function (url) {
     </div>
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化引擎，需要制定dom节点 可以是 body
+    var myepii = epii(document.getElementById("content"));//初始化引擎，需要指定dom节点 可以是 body
 
     myepii.setData({
         title: "列表展示",
@@ -253,7 +252,7 @@ epii.setClickToChangeFunction(function (url) {
     </div>
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化引擎，需要制定dom节点 可以是 body
+    var myepii = epii(document.getElementById("content"));//初始化引擎，需要指定dom节点 可以是 body
     myepii.setData({
         title: "列表展示",
         users:[
@@ -290,7 +289,7 @@ epii.setClickToChangeFunction(function (url) {
     </div>
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化引擎，需要制定dom节点 可以是 body
+    var myepii = epii(document.getElementById("content"));//初始化引擎，需要指定dom节点 可以是 body
     myepii.setData({
         title: "列表展示",
         users:[]
@@ -325,7 +324,7 @@ epii.setClickToChangeFunction(function (url) {
     </div>
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化引擎，需要制定dom节点 可以是 body
+    var myepii = epii(document.getElementById("content"));//初始化引擎，需要指定dom节点 可以是 body
 
     myepii.setData({
         title: "获取数据",

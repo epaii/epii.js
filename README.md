@@ -130,7 +130,7 @@ https://epaii.github.io/epii.js/demo/demo2.html
 # 4 点击事件
 * epii 通过 r-click-change 和 r-click-function 两个标签，实现点击事件，标签内容均可以使用变量符号，其中 r-click-change 标签实现点击自定义跳转， r-click-function标签实现点击触发自定义函数
 * r-click-change="http://www.baidu.com/?1={title}" 点击时候 直接跳转
-* r-click-function="on_subject_click#{info.subject}#{title}"  和  onclick="on_subject_click('{info.subject}','{title}')"  实现效果，推荐使用前者
+* r-click-function="on_subject_click#{info.subject}#{title}"  和  onclick="on_subject_click('{info.subject}','{title}')"  实现效果一样，推荐使用前者
 * onclick，r-click-change，r-click-function 同一节点不可重复使用
 * 以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo9.html
 ```javascript

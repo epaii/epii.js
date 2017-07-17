@@ -228,7 +228,7 @@
 
 
                 var v = $templateParser(value, data);
-               
+
                 if (v == undefined || v == "undefined") {
                     if (defaultvalue) {
                         v = $templateParser(defaultvalue,data);
@@ -288,9 +288,10 @@
 
                     var arg = [];
 
-                    for (var i = 0; i < arr.length; i++) {
-                        arg[i] = arr[i];
+                    for (var i = 1; i < arr.length; i++) {
+                        arg.push(arr[i]);
                     }
+
                     window[to].apply(view, arg);
                 };
                 if (!enable_r_tag_show)

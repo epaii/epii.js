@@ -6,12 +6,14 @@ epii.js是一个 模板数据绑定和事件绑定的快速实现工具，不依
 > * [1 基础数据绑定](https://github.com/epaii/epii.js#1基础数据绑定)
 > * [2 数据绑定其它语法](https://github.com/epaii/epii.js#2-数据绑定其它语法)
 > * [3 节点的隐藏/显示](https://github.com/epaii/epii.js#3-节点的隐藏显示)
-> * [4 列表（基础）](https://github.com/epaii/epii.js#4-列表基础)
-> * [5 列表（多模板）](https://github.com/epaii/epii.js#5-列表多模板)
-> * [6 列表（追加数据）](https://github.com/epaii/epii.js#6-列表追加数据)
-> * [7 列表（空数据）](https://github.com/epaii/epii.js#7-列表空数据)
-> * [8 数据获取，获取已设置的数据，getData,getDataValue连个方法](https://github.com/epaii/epii.js#8-数据获取获取已设置的数据getdatagetdatavalue连个方法)
-> * [9 完整的demo，几乎涉及所有语法](https://github.com/epaii/epii.js#9-完整的demo几乎涉及所有语法)
+> * [4 点击事件](https://github.com/epaii/epii.js#4-点击事件)
+> * [5 自定义跳转事件](https://github.com/epaii/epii.js#5-自定义跳转事件)
+> * [6 列表（基础）](https://github.com/epaii/epii.js#6-列表基础)
+> * [7 列表（多模板）](https://github.com/epaii/epii.js#7-列表多模板)
+> * [8 列表（追加数据）](https://github.com/epaii/epii.js#8-列表追加数据)
+> * [9 列表（空数据）](https://github.com/epaii/epii.js#9-列表空数据)
+> * [10 数据获取，获取已设置的数据，getData,getDataValue两个方法](https://github.com/epaii/epii.js#10-数据获取获取已设置的数据getdatagetdatavalue两个方法)
+> * [11 完整的demo，几乎涉及所有语法](https://github.com/epaii/epii.js#11-完整的demo几乎涉及所有语法)
 
 # 1,基础数据绑定
 * epii 自定义dom节点属性 r-data 可以对任何类型节点赋值，其中 input 节点最终 赋值其value 属性，img节点赋值其 src 属性，其它类型节点均赋值innerHtml 属性。
@@ -66,7 +68,7 @@ https://epaii.github.io/epii.js/demo/demo2.html
 
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+    var myepii = epii(document.getElementById("content"));//初始化引擎，需要制定dom节点 可以是 body
 
     myepii.setData({
         h1_width:100,
@@ -105,7 +107,7 @@ https://epaii.github.io/epii.js/demo/demo2.html
 
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+    var myepii = epii(document.getElementById("content"));//初始化引擎，需要制定dom节点 可以是 body
 
     myepii.setData({
         title: "我是标题",
@@ -123,7 +125,73 @@ https://epaii.github.io/epii.js/demo/demo2.html
     }, 3000);
 </script>
 ```
-# 4 列表（基础）
+
+# 4 点击事件
+* epii 通过 r-click-change 和 r-click-function 两个标签，实现点击事件，标签内容均可以使用变量符号，其中 r-click-change 标签实现点击自定义跳转， r-click-function标签实现点击触发自定义函数
+* r-click-change="http://www.baidu.com/?1={title}" 点击时候 直接跳转
+* r-click-function="on_subject_click#{info.subject}#{title}"  和  onclick="on_subject_click('{info.subject}','{title}')"  实现效果，推荐使用前者
+* onclick，r-click-change，r-click-function 同一节点不可重复使用
+* 以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo9.html
+```javascript
+<div id="content">
+    <h1 r-data="title"  r-click-change="http://www.baidu.com/?q={title}">  </h1>
+    </h1>
+    <div r-data="{info.subject}" r-click-function="on_subject_click#{info.subject}#{title}"></div>
+    <br>
+    <div r-data="{info.subject}" onclick="on_subject_click('{info.subject}','{title}')"></div>
+    <br>
+    <div r-list="users">
+        <div r-click-function="on_item_click#{name}#{age}">
+            名称<span r-data="name"></span>,
+            年龄<span r-data="age" r-click-change="http://www.baidu.com/?age={age}"></span>
+        </div>
+    </div>
+</div>
+<script>
+    var myepii = epii(document.getElementById("content"));//初始化引擎，需要制定dom节点 可以是 body
+
+    myepii.setData({
+        title: "列表展示",
+        info:{subject:"文章简介"},
+        users:[
+            {name:"张三",age:"12岁"},
+            {name:"李四",age:"14岁"}
+        ]
+    });
+
+
+    function on_subject_click(subject,title) {
+        console.log(subject,title);
+
+    }
+    
+    function on_item_click(name,age) {
+        console.log(name,age);
+    }
+</script>
+```
+# 5 自定义跳转事件
+* 通过 epii.setClickToChangeFunction(f); 来自定义 r-click-change 事件， 在native+webapp开发中 一般需要不会直接通过location 页面跳转，而是需要处理自定义协议。
+```javascript
+epii.setClickToChangeFunction(function (url) {
+        console.log(url);
+    });
+```
+* 以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo10.html
+```javascript
+    //自定义r-click-change 处理事件， 在native+webapp开发中 一般需要自定义协议
+    epii.setClickToChangeFunction(function (url) {
+        console.log(url);
+    });
+
+    var myepii = epii(document.getElementById("content"));//初始化引擎，需要制定dom节点 可以是 body
+
+    myepii.setData({
+        title: "列表展示",
+
+    });
+```
+# 6 列表（基础）
 * epii 通过 r-list 标签指定此dom节点将显示列表， 在列表节点内的 变量 将自切换为 列表某一项数据，在列表内之前所有标签,以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo4.html
 ```javascript
 <div id="content">
@@ -133,7 +201,7 @@ https://epaii.github.io/epii.js/demo/demo2.html
     </div>
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+    var myepii = epii(document.getElementById("content"));//初始化引擎，需要制定dom节点 可以是 body
 
     myepii.setData({
         title: "列表展示",
@@ -145,7 +213,7 @@ https://epaii.github.io/epii.js/demo/demo2.html
 
 </script>
 ```
-# 5 列表（多模板）
+# 7 列表（多模板）
 * 如果列表中有多个模板，则根据r-display 来自动选择对应的模板,以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo5.html
 ```javascript
 <div id="content">
@@ -156,7 +224,7 @@ https://epaii.github.io/epii.js/demo/demo2.html
     </div>
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+    var myepii = epii(document.getElementById("content"));//初始化引擎，需要制定dom节点 可以是 body
 
     myepii.setData({
         title: "列表展示",
@@ -170,7 +238,7 @@ https://epaii.github.io/epii.js/demo/demo2.html
 
 </script>
 ```
-# 6 列表（追加数据）
+# 8 列表（追加数据）
 * epii 可两种方式对列表追加数据
 * 方法1 ，重新 setData, 将重新显示列表所有数据，如果旧数据有改变，则用这种方法
 * 方法2 ， addData ，已有数据不变，追加数据，如果旧数据没有任何改变，推荐使用这种方式
@@ -184,7 +252,7 @@ https://epaii.github.io/epii.js/demo/demo2.html
     </div>
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+    var myepii = epii(document.getElementById("content"));//初始化引擎，需要制定dom节点 可以是 body
     myepii.setData({
         title: "列表展示",
         users:[
@@ -195,7 +263,7 @@ https://epaii.github.io/epii.js/demo/demo2.html
         ]
     });
     setTimeout(function () {//3秒后追加列表
-        myepii.addData({ //追加已有数据，列表将别追加，其它类型直接覆盖
+        myepii.addData({ //追加已有数据，列表将被追加，其它类型直接覆盖
             title: "追加列表展示",
             users:[
                 {name:"张三5",age:"12岁",item_type:1},
@@ -209,7 +277,7 @@ https://epaii.github.io/epii.js/demo/demo2.html
 
 </script>
 ```
-# 7 列表（空数据）
+# 9 列表（空数据）
 通过 r-empty="1" 设置当数据为空，或者未设置时候列表的样式，以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo7.html
 ```javascript
 <div id="content">
@@ -221,7 +289,7 @@ https://epaii.github.io/epii.js/demo/demo2.html
     </div>
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+    var myepii = epii(document.getElementById("content"));//初始化引擎，需要制定dom节点 可以是 body
     myepii.setData({
         title: "列表展示",
         users:[]
@@ -242,7 +310,7 @@ https://epaii.github.io/epii.js/demo/demo2.html
 </script>
 ```
 
-# 8 数据获取，获取已设置的数据，getData,getDataValue连个方法
+# 10 数据获取，获取已设置的数据，getData,getDataValue两个方法
 * 通过 epii 的 getData 方法 可以获取所有设置的数据
 * 通过  epii的 getDataValue 方法 可以快速获取已设置的数据，getDataValue 支持多参数，链条key
 * 如 myepii.getDataValue("title");  myepii.getDataValue("info","subject");   myepii.getDataValue("users",1,"age")
@@ -256,7 +324,7 @@ https://epaii.github.io/epii.js/demo/demo2.html
     </div>
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+    var myepii = epii(document.getElementById("content"));//初始化引擎，需要制定dom节点 可以是 body
 
     myepii.setData({
         title: "获取数据",
@@ -274,7 +342,7 @@ https://epaii.github.io/epii.js/demo/demo2.html
     alert(myepii.getDataValue("users",1,"age"));
 </script>
 ```
-# 9 完整的demo，几乎涉及所有语法
+# 11 完整的demo，几乎涉及所有语法
 
 #demo案例源码:(https://github.com/epaii/epii.js/blob/master/index.html)
 

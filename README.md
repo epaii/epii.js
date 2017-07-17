@@ -29,11 +29,11 @@
     <br>
      <div r-data="{subject}" r-data-default="没有被赋值，只能用：{title}"></div><!-- 默认值-->
     <br>
-    <input r-data="inputvalue"><!-- input 负值方法1-->
-    <input value="{inputvalue}"><!-- input 负值方法2-->
+    <input r-data="inputvalue"><!-- input 赋值方法1-->
+    <input value="{inputvalue}"><!-- input 赋值方法2-->
     <br>
-    <img r-data="img_url" style="width: {img_width}px"><!-- img 负值方法1-->
-    <img src="{img_url}" style="width: {img_width}px"><!-- img 负值方法2  ,但这种存在缺点，因为在解析前，已经加载一次不存在的图片，多一次请求，不推荐-->
+    <img r-data="img_url" style="width: {img_width}px"><!-- img 赋值方法1-->
+    <img src="{img_url}" style="width: {img_width}px"><!-- img 赋值方法2  ,但这种存在缺点，因为在解析前，已经加载一次不存在的图片，多一次请求，不推荐-->
 </div>
 <script>
     var myepii = epii(document.getElementById("content"));//初始化引擎，需要指定dom节点 可以是 body

@@ -296,7 +296,7 @@ epii.setClickToChangeFunction(function (url) {
         users:[]
     });
     setTimeout(function () {//3秒后追加列表
-        myepii.addData({ //追加已有数据，列表将别追加，其它类型直接覆盖
+        myepii.addData({ //追加已有数据，列表将别被加，其它类型直接覆盖
             title: "追加列表展示",
             users:[
                 {name:"张三5",age:"12岁",item_type:1},
@@ -437,7 +437,7 @@ epii.setClickToChangeFunction(function (url) {
             isshow: 0
         });
         setTimeout(function () {
-            myepii.addData({//追加已有数据，列表将别追加，其它类型直接覆盖
+            myepii.addData({//追加已有数据，列表将被追加，其它类型直接覆盖
                 "hebei":"河北石家庄",
                  "display":"none",
                 "list": [

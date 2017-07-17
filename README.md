@@ -1,7 +1,7 @@
  
 
 # epii.js是什么
-> * epii.js是一个 模板引擎，可快速实现数据与ui绑定，快速实现事件绑定，与处理，不依赖任何第三方库,仅仅8k，在native+webapp开发 和 web开发，h5微网页上均可以使用， 不与其它框架冲突。
+> * epii.js 不仅仅是一个模板引擎! 可快速实现数据与ui绑定（数据变动，UI自动变动），快速实现事件绑定和处理，不依赖任何第三方库,仅仅8k，在native+webapp开发 和 web开发，h5微网页上均可以使用， 不与其它框架冲突。
 > * 让开发者更多关注与应用本身，而不用花费大量时间实现数据与ui的，和事件处理。效率大幅度提升。
 # 目录
 > * [1 基础数据绑定](https://github.com/epaii/epii.js#1基础数据绑定)
@@ -46,8 +46,8 @@
         img_width:100
     });
 
-    setTimeout(function () {
-        myepii.setData({
+    setTimeout(function () {//数据改变后，页面自动改变，无需再次渲染
+        myepii.setData({
             title: "我是新的标题",
             content: "我是新的内容主题"
         });

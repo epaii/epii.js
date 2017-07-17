@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../epii.js?as=1"></script>
+</head>
+<body>
+<div id="content">
+    <h1 r-data="title"  r-click-change="http://www.baidu.com/?q={title}">  </h1>
+    </h1>
+    <div r-data="{info.subject}" r-click-function="on_subject_click#{info.subject}#{title}"></div>
+    <br>
+    <div r-data="{info.subject}" onclick="on_subject_click('{info.subject}','{title}')"></div>
+    <br>
+    <div r-list="users">
+        <div r-click-function="on_item_click#{name}#{age}">
+            名称<span r-data="name"></span>,
+            年龄<span r-data="age" r-click-change="http://www.baidu.com/?age={age}"></span>
+        </div>
+    </div>
+</div>
+<script>
+    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+
+    myepii.setData({
+        title: "列表展示",
+        info:{subject:"文章简介"},
+        users:[
+            {name:"张三",age:"12岁"},
+            {name:"李四",age:"14岁"}
+        ]
+    });
+
+
+    function on_subject_click(subject,title) {
+        console.log(subject,title);
+
+    }
+    
+    function on_item_click(name,age) {
+        console.log(name,age);
+    }
+</script>
+</body>
+</html>

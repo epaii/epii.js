@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../epii.min.js"></script>
+
+</head>
+<body>
+
+<div id="content">
+    <span r-data='{hi}' style='font-size:{font}'></span>
+</div>
+
+<script>
+    var myepii = epii(document.getElementById("content"));//初始化epii对象，需要指定dom节点 可以是 document.body
+    myepii.setData({
+        hi: "hello epii.js",
+        font: "50px"
+    });
+
+    setTimeout(function () {
+        myepii.setData({
+            font: "100px"
+        });
+    },3000);//3秒后数据变动，ui自动变动
+</script>
+</body>
+
+</html>

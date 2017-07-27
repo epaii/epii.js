@@ -1,9 +1,13 @@
-![](https://raw.githubusercontent.com/epaii/epii.js/master/docs/Epii.js.jpg)
 
 <p align=center>
-  Epii.js 简约而不简单的JavaScript模板引擎
+<img src="https://raw.githubusercontent.com/epaii/epii.js/master/docs/Epii.js.jpg" alt="epii.js" width="520">
+ 
 </p>
---- 
+<p align=center >
+  <b>Epii.js 简约而不简单的JavaScript模板引擎</b>
+</p>
+
+---
 
 
 #特性

@@ -7,8 +7,8 @@
  * myepii.addData();//追加数据
  *
  * console.log(myepii.getDataValue("name"));
- console.log(myepii.getDataValue("list",1,"age"));
- console.log(myepii.getDataValue("list",4,"wanju",1,"name"));
+    console.log(myepii.getDataValue("list",1,"age"));
+    console.log(myepii.getDataValue("list",4,"wanju",1,"name"));
  *
  */
 

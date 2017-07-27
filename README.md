@@ -1,102 +1,207 @@
-# epii.js 一个简约而不简单的JS模板引擎，仅8K。
-> * epii.js 不仅仅是一个模板引擎! 可快速实现数据与ui绑定（数据变动，UI自动变动），快速实现事件绑定和处理，不依赖任何第三方库,仅仅8k，在native+webapp开发 和 web开发，h5微网页上均可以使用， 不与其它框架冲突。
-> * 让开发者更多关注与应用本身，而不用花费大量时间实现数据与ui的，和事件处理。效率大幅度提升。
-# 目录
-> * [1 基础数据绑定](https://github.com/epaii/epii.js#1基础数据绑定)
-> * [2 数据绑定其它语法](https://github.com/epaii/epii.js#2-数据绑定其它语法)
-> * [3 节点的隐藏/显示](https://github.com/epaii/epii.js#3-节点的隐藏显示)
-> * [4 点击事件](https://github.com/epaii/epii.js#4-点击事件)
-> * [5 自定义跳转事件](https://github.com/epaii/epii.js#5-自定义跳转事件)
-> * [6 列表（基础）](https://github.com/epaii/epii.js#6-列表基础)
-> * [7 列表（多模板）](https://github.com/epaii/epii.js#7-列表多模板)
-> * [8 列表（追加数据）](https://github.com/epaii/epii.js#8-列表追加数据)
-> * [9 列表（空数据）](https://github.com/epaii/epii.js#9-列表空数据)
-> * [10 数据获取，获取已设置的数据，getData,getDataValue两个方法](https://github.com/epaii/epii.js#10-数据获取获取已设置的数据getdatagetdatavalue两个方法)
-> * [11 完整的demo，几乎涉及所有语法](https://github.com/epaii/epii.js#11-完整的demo几乎涉及所有语法)
+![](https://raw.githubusercontent.com/epaii/epii.js/master/docs/Epii.js.jpg)
+###<center> **Epii.js 简约而不简单的JavaScript模板引擎**</center >
 
-# 1,基础数据绑定
-* epii 自定义dom节点属性 r-data 可以对任何类型节点赋值，其中 input 节点最终 赋值其value 属性，img节点赋值其 src 属性，其它类型节点均赋值innerHtml 属性。
-* 如果设置r-data-default 则在没有数据时候显示默认值。
-* r-data="title"  和 r-data="{title}" 的区别是，在title值不存在时，第一种情况 将显示 title 字符串，第二种情况 显示空，如果第二种情况设置了r-data-default 则显示其设置的默认值
-* 以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo1.html
+#特性
+------
+1. 一个轻量级模板引擎，可快速实现数据与ui绑定（数据变动，UI自动变动），快速实现事件绑定和处理，**不依赖任何第三方库,仅仅8k**。
+2. 可快速应用于**web开发**,**native+webapp**开发,**h5**微网页开发,不与其它框架冲突。
+3. **让开发者更多关注与应用本身，而不用花费大量时间实现数据与ui的，和事件处理。效率大幅度提升。**
+
+#名字由来
+
+```
+自然数e，圆周率π，虚数单位i，三者合在一起组成 epii。
+```
+#文档目录
+1. [如何使用，并写出第一个程序][install]
+2. [数据与模板的绑定][bangding]
+3. [事件][shijian]
+4. [数据的获取][huoqu]
+
+#第一个程序
+---
+
+1.下载 [**epii.min.js**][epiijslink],并在网页中引用
+
+```html
+<script src="path/to/epii.min.js"></script>
+```
+2.编写一个最简单模板
+
+```html
+<body>
+	<div id="content">
+		<span r-data='{hi}' style='font-size:{font}'></span>
+	</div>
+</body>
+```
+
+3.使用**epii(dom)**方法初始化epii对象
+
 ```javascript
-<div id="content">
-    <h1 r-data="title">
-    </h1>
-    <div r-data="文章内容：{content}"></div>
-    <br>
-     <div r-data="{subject}" r-data-default="没有被赋值，只能用：{title}"></div><!-- 默认值-->
-    <br>
-    <input r-data="inputvalue"><!-- input 赋值方法1-->
-    <input value="{inputvalue}"><!-- input 赋值方法2-->
-    <br>
-    <img r-data="img_url" style="width: {img_width}px"><!-- img 赋值方法1-->
-    <img src="{img_url}" style="width: {img_width}px"><!-- img 赋值方法2  ,但这种存在缺点，因为在解析前，已经加载一次不存在的图片，多一次请求，不推荐-->
-</div>
-<script>
-    var myepii = epii(document.getElementById("content"));//初始化引擎，需要指定dom节点 可以是 body
+var myepii = epii(document.getElementById("content"))//初始化epii对象，需要指定dom节点 可以是 document.body
+```
 
+4.数据与模板绑定
+
+```javascript
+    var myepii = epii(document.getElementById("content"));//初始化epii对象，需要指定dom节点 可以是 document.body
     myepii.setData({
-        title: "我是标题",
-        content: "我是内容主题",
-        inputvalue: "input内容",
-        img_url:"https://www.baidu.com/img/bd_logo1.png",
-        img_width:100
+        hi: "hello epii.js",
+        font: "50px"
     });
 
-    setTimeout(function () {//数据改变后，页面自动改变，无需再次渲染
-        myepii.setData({
-            title: "我是新的标题",
-            content: "我是新的内容主题"
+    setTimeout(function () {
+        myepii.setData({
+            font: "100px"
         });
-    }, 3000);
+    },3000);//3秒后数据变动，ui自动变动
+
+```
+> 点击查看效果[demo1.html][demo1.html]
+
+#变量的解析（基础）
+---
+##特性(重点)
+* 变量在模板中一般用 *{}* 表示。**如{a},{b}**
+* 变量只能在dom标签属性中使用。如 *style="width:{width}"*
+* *r-data* 标签是epii.js自定义最重要的一个标签。一般用来赋值。
+	* *`<input>`* 标签将用于赋予 value 属性值。
+	* *`<img>`* 标签将用于赋予 src 属性值。
+	* *`<div> <span> <p> 等其它标签`*  将用于赋予 innerHTML 属性值。
+* *r-data-default* 标签，是当*r-data*标签值得变量在没有数据时候显示默认值。
+* `r-data="title"`  和 `r-data="{title}"` 的区别是，在`title`值不存在时，第一种情况 将显示 title 字符串，第二种情况 显示空，如果第二种情况设置了r-data-default 则显示其设置的默认值。
+
+##示例
+```javascript
+<div id="content">
+    <span r-data='您好，我是{name}' style='font-size:{font}'></span>
+    <div style="background-color: {bgcolor}">
+        我的Logo是:<br><img r-data="logo_img">
+    </div>
+
+    <span r-data="{subject}" r-data-default="默认的简介：我叫：{name}"></span>
+    <p >
+        成立于：<input r-data="{time}">
+    </p>
+</div>
+<script>
+    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+
+    myepii.setData({
+        name: "epii.js",
+        font: "50px",
+        logo_img: "https://raw.githubusercontent.com/epaii/epii.js/master/docs/Epii.js.jpg",
+        bgcolor: "red",
+        time: "2017-06-22"
+    });
+
+
+    setTimeout(function () {
+        myepii.setData({
+            subject: "我的简介是：Epii.js 简约而不简单的JavaScript模板引擎",
+            bgcolor:"#999999"
+        });
+    },3000);
+
 </script>
 ```
-# 2 数据绑定其它语法
-* epii 可以实现dom节点 属性的变量绑定，可以在任意属性中使用变量标签，比如 style ，width，等任意属性,以下代码效果可在此处预览 
-* 支持 链条式变量，比如 {info.subject}  
-https://epaii.github.io/epii.js/demo/demo2.html
+> 点击查看效果[demo2.html][demo2.html]
+
+#变量的解析（高级）
+---
+* 支持链条式变量，如*{info.name}*,*{info.user.sex}*
+* *r-data* 可定义变量空间。可大幅度简化变量写法。
+
+> 未使用变量空间的写法
+
+```html
+ <!-- 不设置空间的写法-->
+<div>
+        <p>title:<span r-data="{info.title}" style="color:{info.title_color}"></span></p>
+        <p>subject:<span r-data="{info.subject}"></span></p>
+        <div>
+            作者信息: name:<span r-data="{info.author.name}"></span>,sex:<span r-data="{info.author.sex}"></span>
+        </div>
+    </div>
+<div>
+
+<div>
+```
+> 设置空间的写法
+
+```html
+<!--r-data 设置变量空间 设置空间为 info,在空间内部 info.title 直接写 title就可以 的写法-->
+<div r-data="{info}" style="background: cadetblue">
+        <p>title:<span r-data="{title}" style="color:{title_color}"></span></p>
+        <p>subject:<span r-data="{subject}"></span></p>
+        <div r-data="author">
+            作者信息: name:<span r-data="name"></span>,sex:<span r-data="{sex}"></span>
+        </div>
+</div>
+```
+
+> 全部代码
 
 ```javascript
 <div id="content">
-    <h1 r-data="title" style="width: {h1_width}px;height: {h1_height}px;background-color: {h1_color}">
-    </h1>
-    <div r-data="{info.subject}"></div>
-    <br>
-    <img r-data="{img.img_url}" style="width: {img.img_width}px">
+    <!-- 不设置空间的写法-->
+    <div>
+        <p>title:<span r-data="{info.title}" style="color:{info.title_color}"></span></p>
+        <p>subject:<span r-data="{info.subject}"></span></p>
+        <div>
+            作者信息: name:<span r-data="{info.author.name}"></span>,sex:<span r-data="{info.author.sex}"></span>
+        </div>
+    </div>
 
+    <!--r-data 设置变量空间 设置空间为 info,在空间内部 info.title 直接写 title就可以 的写法-->
+    <div r-data="{info}" style="background: cadetblue">
+        <p>title:<span r-data="{title}" style="color:{title_color}"></span></p>
+        <p>subject:<span r-data="{subject}"></span></p>
+        <div r-data="author">
+            作者信息: name:<span r-data="name"></span>,sex:<span r-data="{sex}"></span>
+        </div>
+    </div>
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化引擎，需要指定dom节点 可以是 body
+    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
 
     myepii.setData({
-        h1_width:100,
-        h1_height:100,
-        h1_color:"red",
-        title: "我是标题",
-        info:{subject:"文章简介"},
-        img:{
-            img_url: "https://www.baidu.com/img/bd_logo1.png",
-            img_width: 100
+        info: {
+            title: "epii.js 简介",
+            title_color:"red",
+            subject: "epii.js 简约而不简单的JavaScript模板引擎",
+            author: {
+                name: "MrRen",
+                sex: "男"
+
+            }
+
         }
     });
 
     setTimeout(function () {
         myepii.setData({
-            title: "我是新的标题",
-            h1_width:300,
-            h1_height:300,
-            h1_color:"blue",
-            img:{  img_width:300}
+            info: {
+                title: "epii.js 新的简介"
+
+            }
         });
     }, 3000);
+
 </script>
 ```
-# 3 节点的隐藏/显示
-* epii 提共两种方式设置dom节点隐藏和显示
-* 方法1 ，style="display: {h1_display}"  通过style 属性绑定
-* 方法2 ， 通过 r-display 标签 r-display="{img_show}-1==0"，必须为bool 等式字符串 ，推荐使用这种方式
-* 以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo3.html
+> 点击查看效果[demo3.html][demo3.html]
+
+#节点的隐藏和显示
+---
+ *epii.js* 提共两种方式设置dom节点隐藏和显示。
+ 
+ * 方法1 `style="display: {h1_display}"`  通过style属性来控制。
+ * 方法2 通过 `r-display` 标签来设定。 `r-display="{img_show}-1==0"`，必须为bool 等式字符串 ，推荐使用这种方式
+ * 两种方法都支持变量空间
+
+
 ```javascript
 <div id="content">
     <h1 r-data="title" style="display: {h1_display}"> <!--第一种方法，直接在style中 用变量，不推荐-->
@@ -106,12 +211,13 @@ https://epaii.github.io/epii.js/demo/demo2.html
 
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化引擎，需要指定dom节点 可以是 body
+    var myepii = epii(document.getElementById("content"));//初始化引擎，需要制定dom节点 可以是 body
+
     myepii.setData({
         title: "我是标题",
         h1_display:"block",
 
-        img_url:"https://www.baidu.com/img/bd_logo1.png",
+        img_url:"https://raw.githubusercontent.com/epaii/epii.js/master/docs/Epii.js.jpg",
         img_show:1
     });
 
@@ -123,74 +229,82 @@ https://epaii.github.io/epii.js/demo/demo2.html
     }, 3000);
 </script>
 ```
+> 点击查看效果[demo4.html][demo4.html]
 
-# 4 点击事件
-* epii 通过 r-click-change 和 r-click-function 两个标签，实现点击事件，标签内容均可以使用变量符号，其中 r-click-change 标签实现点击自定义跳转， r-click-function标签实现点击触发自定义函数
-* r-click-change="http://www.baidu.com/?1={title}" 点击时候 直接跳转
-* r-click-function="on_subject_click#{info.subject}#{title}"  和  onclick="on_subject_click('{info.subject}','{title}')"  实现效果一样，推荐使用前者
-* onclick，r-click-change，r-click-function 同一节点不可重复使用
-* 以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo9.html
-```javascript
+#事件
+---
+* 1、dom 事件，仍可通过常规设置来实现，如 `onclick="fun('{name}','{age}')"` 
+	`onblur="myblur('{name}','{age}')"`  
+* 2、*epii.js* 自定义 `r-click-change` 和 `r-click-function` 两个标签来处理 点击跳转 和点击执行函数事件（这两种事件占比最高）。
+* 3、`r-click-change` 标签设置点击跳转链接。 如 `r-click-change='http://www.baidu.com?name={name}'`
+* 4、`r-click-function` 标签设置点击执行函数。 如 `r-click-function="on_subject_click#{info.subject}#{title}"`,这种写法和 `onclick="on_subject_click('{info.subject}','{title}')" ` 实现效果一样，推荐使用前者。
+* 5、* onclick，r-click-change，r-click-function * 同一节点不可重复使用
+
+```html
 <div id="content">
-    <h1 r-data="title"  r-click-change="http://www.baidu.com/?q={title}">  </h1>
+    <h1 r-data="title" r-click-change="{baidu_link}">
     </h1>
-    <div r-data="{info.subject}" r-click-function="on_subject_click#{info.subject}#{title}"></div>
     <br>
-    <div r-data="{info.subject}" onclick="on_subject_click('{info.subject}','{title}')"></div>
-    <br>
-    <div r-list="users">
-        <div r-click-function="on_item_click#{name}#{age}">
-            名称<span r-data="name"></span>,
-            年龄<span r-data="age" r-click-change="http://www.baidu.com/?age={age}"></span>
-        </div>
-    </div>
+    <img r-data="img_url" r-click-function="{imgclick}#{title}#{img_url}">
+
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化引擎，需要指定dom节点 可以是 body
+    var myepii = epii(document.getElementById("content"));
 
     myepii.setData({
-        title: "列表展示",
-        info:{subject:"文章简介"},
-        users:[
-            {name:"张三",age:"12岁"},
-            {name:"李四",age:"14岁"}
-        ]
+        title: "点我跳转到百度",
+        baidu_link: "http://www.baidu.com",
+
+        img_url: "https://raw.githubusercontent.com/epaii/epii.js/master/docs/Epii.js.jpg",
+
+        imgclick: "myfunction"
+
+
     });
-
-
-    function on_subject_click(subject,title) {
-        console.log(subject,title);
-
+    function myfunction(title, img_url) {
+        console.log(this.src);//this is dom itself
+        console.log(title);
+        console.log(img_url);
     }
-    
-    function on_item_click(name,age) {
-        console.log(name,age);
-    }
+
 </script>
 ```
-# 5 自定义跳转事件
-* 通过 epii.setClickToChangeFunction(f); 来自定义 r-click-change 事件， 在native+webapp开发中 一般需要不会直接通过location 页面跳转，而是需要处理自定义协议。
-```javascript
-epii.setClickToChangeFunction(function (url) {
-        console.log(url);
-    });
-```
-* 以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo10.html
-```javascript
+> 点击查看效果[demo5.html][demo5.html]
+
+### 自定义跳转事件
+> 通过 `epii.setClickToChangeFunction(f);` 来自定义 `r-click-change` 事件， 在`native+webapp`开发中 一般需要不会直接通过location 页面跳转，而是需要处理自定义协议。
+
+```html
+<div id="content">
+    <h1 r-data="title" r-click-change="baidu://?a=1&b=2"></h1>
+
+</div>
+<script>
     //自定义r-click-change 处理事件， 在native+webapp开发中 一般需要自定义协议
     epii.setClickToChangeFunction(function (url) {
         console.log(url);
     });
 
-    var myepii = epii(document.getElementById("content"));//初始化引擎，需要指定dom节点 可以是 body
+    var myepii = epii(document.getElementById("content"));
 
     myepii.setData({
-        title: "列表展示",
-
+        title: "我是 Epii.js"
     });
+
+
+</script>
 ```
-# 6 列表（基础）
-* epii 通过 r-list 标签指定此dom节点将显示列表， 在列表节点内的 变量 将自切换为 列表某一项数据，在列表内之前所有标签,以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo4.html
+> 点击查看效果[demo6.html][demo6.html]
+
+
+
+
+# 列表
+---
+### 基础
+>  *epii.js* 通过自定义标签 *`r-list`* 来设置此dom节点将显示列表， 在列表节点内的 变量 将自切换为 列表某一项数据。
+>  支持多级列表展示
+ 
 ```javascript
 <div id="content">
     <h1 r-data="title" >  </h1>
@@ -199,8 +313,7 @@ epii.setClickToChangeFunction(function (url) {
     </div>
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化引擎，需要指定dom节点 可以是 body
-
+    var myepii = epii(document.getElementById("content")); 
     myepii.setData({
         title: "列表展示",
         users:[
@@ -211,19 +324,21 @@ epii.setClickToChangeFunction(function (url) {
 
 </script>
 ```
-# 7 列表（多模板）
-* 如果列表中有多个模板，则根据r-display 来自动选择对应的模板,以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo5.html
+> 点击查看效果[demo7.html][demo7.html]
+
+### 多模板
+> 如果列表中有多个模板，则根据 `r-display` 来自动选择对应的模板,
+
 ```javascript
 <div id="content">
-    <h1 r-data="title" >  </h1>
+    <h1 r-data="title" > </h1>
     <div r-list="users">
         <div r-display="{item_type}-1==0" style="background-color: blueviolet">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
         <div r-display="{item_type}-2==0" style="background-color: red">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
     </div>
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化引擎，需要指定dom节点 可以是 body
-
+    var myepii = epii(document.getElementById("content"));
     myepii.setData({
         title: "列表展示",
         users:[
@@ -233,14 +348,18 @@ epii.setClickToChangeFunction(function (url) {
             {name:"李四1",age:"141岁",item_type:2}
         ]
     });
-
 </script>
 ```
-# 8 列表（追加数据）
+> 点击查看效果[demo8.html][demo8.html]
+
+### 追加数据
+
 * epii 可两种方式对列表追加数据
-* 方法1 ，重新 setData, 将重新显示列表所有数据，如果旧数据有改变，则用这种方法
-* 方法2 ， addData ，已有数据不变，追加数据，如果旧数据没有任何改变，推荐使用这种方式
-* 以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo6.html
+* 方法1 ，重新 *setData*, 将重新显示列表所有数据，如果旧数据有改变，则用这种方法 。
+* 方法2 ， *addData* ，已有数据不变，追加数据，如果旧数据没有任何改变，推荐使用这种方式 。
+ 
+
+
 ```javascript
 <div id="content">
     <h1 r-data="title" >  </h1>
@@ -275,8 +394,11 @@ epii.setClickToChangeFunction(function (url) {
 
 </script>
 ```
-# 9 列表（空数据）
-通过 r-empty="1" 设置当数据为空，或者未设置时候列表的样式，以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo7.html
+> 点击查看效果[demo9.html][demo9.html]
+
+### 空数据
+> 通过 `r-empty="1"` 设置当数据为空，或者未设置时候列表的样式 。
+
 ```javascript
 <div id="content">
     <h1 r-data="title" >  </h1>
@@ -287,12 +409,12 @@ epii.setClickToChangeFunction(function (url) {
     </div>
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化引擎，需要指定dom节点 可以是 body
-    myepii.setData({
+    var myepii = epii(document.getElementById("content"));
+        myepii.setData({
         title: "列表展示",
         users:[]
     });
-    setTimeout(function () {//3秒后追加列表
+    setTimeout(function () {
         myepii.addData({ //追加已有数据，列表将别被加，其它类型直接覆盖
             title: "追加列表展示",
             users:[
@@ -307,12 +429,18 @@ epii.setClickToChangeFunction(function (url) {
 
 </script>
 ```
+> 点击查看效果[demo10.html][demo10.html]
 
-# 10 数据获取，获取已设置的数据，getData,getDataValue两个方法
-* 通过 epii 的 getData 方法 可以获取所有设置的数据
-* 通过  epii的 getDataValue 方法 可以快速获取已设置的数据，getDataValue 支持多参数，链条key
-* 如 myepii.getDataValue("title");  myepii.getDataValue("info","subject");   myepii.getDataValue("users",1,"age")
-* 以下代码效果可在此处预览 https://epaii.github.io/epii.js/demo/demo8.html
+#数据获取，获取已设置的数据
+---
+``` getData,getDataValue两个方法```
+
+###特性
+
+* 通过 *`epii.js`* 的 `getData` 方法 可以获取所有设置的数据
+* 通过  epii的 `getDataValue` 方法 可以快速获取已设置的数据，`getDataValue` 支持多参数，链条`key`
+* 如 `myepii.getDataValue("title");`  `myepii.getDataValue("info","subject");  ` `myepii.getDataValue("users",1,"age")`
+
 ```javascript
 <div id="content">
     <h1 r-data="title" >  </h1>
@@ -322,8 +450,7 @@ epii.setClickToChangeFunction(function (url) {
     </div>
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化引擎，需要指定dom节点 可以是 body
-
+    var myepii = epii(document.getElementById("content"));
     myepii.setData({
         title: "获取数据",
         info:{subject:"标题"},
@@ -339,16 +466,17 @@ epii.setClickToChangeFunction(function (url) {
     alert(myepii.getDataValue("info","subject"));
     alert(myepii.getDataValue("users",1,"age"));
 </script>
+
 ```
-# 11 完整的demo，几乎涉及所有语法
+> 点击查看效果[demo11.html][demo11.html]
 
-#demo案例源码:(https://github.com/epaii/epii.js/blob/master/index.html)
 
-#demo案例效果:(https://epaii.github.io/epii.js/index.html)
+#一个复杂的demo，几乎涉及所有语法
+---
 
 ```html
 
-<div  >
+<div>
     <div r-data="我的名字是{name}，性别:{sex}" r-click-function="index#{name}#{sex}">
 
     </div>
@@ -389,8 +517,7 @@ epii.setClickToChangeFunction(function (url) {
 
     </div>
 </div>
-```
-```javascript
+ 
 <script>
     epii.setClickToChangeFunction(function (url) {
         alert(url);
@@ -403,7 +530,7 @@ epii.setClickToChangeFunction(function (url) {
         console.log(b);
     }
     var data = {
-        "img_url":"https://www.baidu.com/img/bd_logo1.png",
+        "img_url":"https://raw.githubusercontent.com/epaii/epii.js/master/docs/Epii.js.jpg",
         "display":"block",
         "width":100,
         "height":200,
@@ -460,3 +587,18 @@ epii.setClickToChangeFunction(function (url) {
 
 </script>
 ```
+> 点击查看效果[demo12.html][demo12.html]
+
+
+[demo1.html]:https://epaii.github.io/epii.js/demo/docs_html/demo1.html "epii.js JavaScript 模板引擎"
+[demo2.html]:https://epaii.github.io/epii.js/demo/docs_html/demo2.html "epii.js JavaScript 模板引擎"
+[demo3.html]:https://epaii.github.io/epii.js/demo/docs_html/demo3.html "epii.js JavaScript 模板引擎"
+[demo4.html]:https://epaii.github.io/epii.js/demo/docs_html/demo4.html "epii.js JavaScript 模板引擎"
+[demo5.html]:https://epaii.github.io/epii.js/demo/docs_html/demo5.html "epii.js JavaScript 模板引擎"
+[demo6.html]:https://epaii.github.io/epii.js/demo/docs_html/demo6.html "epii.js JavaScript 模板引擎"
+[demo7.html]:https://epaii.github.io/epii.js/demo/docs_html/demo7.html "epii.js JavaScript 模板引擎"
+[demo8.html]:https://epaii.github.io/epii.js/demo/docs_html/demo8.html "epii.js JavaScript 模板引擎"
+[demo9.html]:https://epaii.github.io/epii.js/demo/docs_html/demo9.html "epii.js JavaScript 模板引擎"
+[demo10.html]:https://epaii.github.io/epii.js/demo/docs_html/demo10.html "epii.js JavaScript 模板引擎"
+[demo11.html]:https://epaii.github.io/epii.js/demo/docs_html/demo11.html "epii.js JavaScript 模板引擎"
+[demo12.html]:https://epaii.github.io/epii.js/demo/docs_html/demo12.html "epii.js JavaScript 模板引擎"

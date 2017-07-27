@@ -606,7 +606,7 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
 ```
 > 点击查看效果[demo12.html][demo12.html]
 
-
+[epiijslink]:https://raw.githubusercontent.com/epaii/epii.js/master/epii.min.js
 [demo1.html]:https://epaii.github.io/epii.js/demo/docs_html/demo1.html "epii.js JavaScript 模板引擎"
 [demo2.html]:https://epaii.github.io/epii.js/demo/docs_html/demo2.html "epii.js JavaScript 模板引擎"
 [demo3.html]:https://epaii.github.io/epii.js/demo/docs_html/demo3.html "epii.js JavaScript 模板引擎"

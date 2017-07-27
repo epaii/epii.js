@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>变量的绑定</title>
+    <script src="../../epii.min.js"></script>
+</head>
+<body>
+<div id="content">
+    <span r-data='您好，我是{name}' style='font-size:{font}'></span>
+    <div style="background-color: {bgcolor}">
+        我的Logo是:<br><img r-data="logo_img">
+    </div>
+
+    <span r-data="{subject}" r-data-default="默认的简介：我叫：{name}"></span>
+    <p >
+        成立于：<input r-data="{time}">
+    </p>
+</div>
+<script>
+    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+
+    myepii.setData({
+        name: "epii.js",
+        font: "50px",
+        logo_img: "https://raw.githubusercontent.com/epaii/epii.js/master/docs/Epii.js.jpg",
+        bgcolor: "red",
+        time: "2017-06-22"
+    });
+
+
+    setTimeout(function () {
+        myepii.setData({
+            subject: "我的简介是：Epii.js 简约而不简单的JavaScript模板引擎",
+            bgcolor:"#999999"
+        });
+    },3000);
+
+</script>
+</body>
+</html>

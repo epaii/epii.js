@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../epii.js"></script>
+</head>
+<body>
+<div id="content">
+    <h1 r-data="title" r-click-change="baidu://?a=1&b=2"></h1>
+
+</div>
+<script>
+    //自定义r-click-change 处理事件， 在native+webapp开发中 一般需要自定义协议
+    epii.setClickToChangeFunction(function (url) {
+        console.log(url);
+    });
+
+    var myepii = epii(document.getElementById("content"));
+
+    myepii.setData({
+        title: "我是 Epii.js,我是可以点击的"
+    });
+
+</script>
+</body>
+</html>

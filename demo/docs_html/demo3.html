@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>变量的绑定(高级)</title>
+    <script src="../../epii.js"></script>
+</head>
+<body>
+<div id="content">
+    <!-- 不设置空间的写法-->
+    <div>
+        <p>title:<span r-data="{info.title}" style="color:{info.title_color}"></span></p>
+        <p>subject:<span r-data="{info.subject}"></span></p>
+        <div>
+            作者信息: name:<span r-data="{info.author.name}"></span>,sex:<span r-data="{info.author.sex}"></span>
+        </div>
+    </div>
+
+    <!--r-data 设置变量空间 设置空间为 info,在空间内部 info.title 直接写 title就可以 的写法-->
+    <div r-data="{info}" style="background: cadetblue">
+        <p>title:<span r-data="{title}" style="color:{title_color}"></span></p>
+        <p>subject:<span r-data="{subject}"></span></p>
+        <div r-data="author">
+            作者信息: name:<span r-data="name"></span>,sex:<span r-data="{sex}"></span>
+        </div>
+    </div>
+</div>
+<script>
+    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+
+    myepii.setData({
+        info: {
+            title: "epii.js 简介",
+            title_color:"red",
+            subject: "epii.js 简约而不简单的JavaScript模板引擎",
+            author: {
+                name: "MrRen",
+                sex: "男"
+
+            }
+
+        }
+    });
+
+    setTimeout(function () {
+        myepii.setData({
+            info: {
+                title: "epii.js 新的简介"
+
+            }
+        });
+    }, 3000);
+
+</script>
+</body>
+</html>

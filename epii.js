@@ -2,11 +2,11 @@
  * Created by MrRen on 2017/7/14.
  * 模板数据绑定和事件绑定的快速实现
  * 不依赖任何第三方库
- * 请勿商业使用
  * var myepii = epii(dom);
  * myepii.setData();//设置数据
  * myepii.addData();//追加数据
- *  console.log(myepii.getDataValue("name"));
+ *
+ * console.log(myepii.getDataValue("name"));
  console.log(myepii.getDataValue("list",1,"age"));
  console.log(myepii.getDataValue("list",4,"wanju",1,"name"));
  *
@@ -18,27 +18,35 @@
 
     var click_change_function = function (url) {
         window.location.href = url;
-    }, enable_r_tag_show = false, $_templateParser =null;
+    }, enable_r_tag_show = false, $_templateParser = null;
 
     function getValueByKeyPath(data, keypaths) {
+        if (keypaths == null) {
+            return data;
+        }
         var i = 0, out = data[keypaths[i++]], len = keypaths.length;
 
 
         while (i < len) {
+            if (out === undefined)  return null;
+            out = out[keypaths[i++]];
 
-            out = out[keypaths[i++]]
         }
         return out;
     }
 
     function $templateParser(key, data) {
+        if (data == undefined || data == null) {
+            return null;
+        }
         var value = "";
         if (key && key.indexOf("{") != -1) {
-            // console.log(key);
+
             value = key.replace(/{(.*?)}/gi, function () {
 
                 // console.log(arguments[1]);
                 var key_path = arguments[1].split(".");
+
 
                 var out = getValueByKeyPath(data, key_path);
 
@@ -75,24 +83,28 @@
             root_key_view: {},
             is_data_set: false,
             init: function (group) {
+                // console.log(group);
                 this.view_group = group;
-
+                var keytemp;
                 for (var i = 0; i < group.length; i++) {
 
                     if (group[i].key.indexOf("{") != -1) {
                         var keys = group[i].key.match(/{(.*?)}/gi);
                         for (var j = 0; j < keys.length; j++) {
+                            keys[j] = keys[j].substring(1, keys[j].length - 1);
+                            keytemp = (group[i].view._keypath.length == 0) ? keys[j] : group[i].view._keypath + "." + keys[j];
 
-                            var keytemp = keys[j].substring(1, keys[j].length - 1);
-                            keytemp = keytemp.split(".")[0];
                             if (!this.root_key_view[keytemp]) this.root_key_view[keytemp] = [];
                             this.root_key_view[keytemp].push(group[i]);
                         }
                     } else {
 
+                        keytemp = (group[i].view._keypath.length == 0) ? group[i].key : group[i].view._keypath + "." + group[i].key;
                         if (group[i].type == _r_data_tag || group[i].type == _r_list_tag) {
-                            if (!this.root_key_view[group[i].key]) this.root_key_view[group[i].key] = [];
-                            this.root_key_view[group[i].key].push(group[i]);
+
+
+                            if (!this.root_key_view[keytemp]) this.root_key_view[keytemp] = [];
+                            this.root_key_view[keytemp].push(group[i]);
                         } else {
                             if (!this.root_key_view[_in_it_common]) this.root_key_view[_in_it_common] = [];
                             this.root_key_view[_in_it_common].push(group[i]);
@@ -102,7 +114,7 @@
 
 
                 }
-                // console.log(this.root_key_view);
+                //console.log(this.root_key_view);
                 return this;
             },
             setData: function (data) {
@@ -111,12 +123,33 @@
                 if (this.root_key_view[_in_it_common]) {
                     group = group.concat(this.root_key_view[_in_it_common]);
                 }
-                for (var index in data) {
-                    this.data[index] = data[index];
-                    if (this.root_key_view[index])
+                var datagroup = [{todata: this.data, data: data, keypath: []}];
+                var tmpkeypath;
+                while (datagroup.length > 0) {
+                    var subdata = datagroup.shift();
 
-                        group = group.concat(this.root_key_view[index]);
+                    for (var index in subdata.data) {
+
+                        if (( subdata.data[index] instanceof Array) || (!subdata.data[index]) || (!(subdata.data[index] instanceof Object) )) {
+                            subdata.todata[index] = subdata.data[index];
+                            tmpkeypath = subdata.keypath.concat(index).join(".");
+
+                            if (this.root_key_view[tmpkeypath])
+                                group = group.concat(this.root_key_view[tmpkeypath]);
+                        } else {
+                            subdata.todata[index] = {};
+
+                            datagroup.push({
+                                todata: subdata.todata[index],
+                                data: subdata.data[index],
+                                keypath: subdata.keypath.concat(index)
+                            });
+                        }
+
+
+                    }
                 }
+
 
                 if (!this.is_data_set) {
                     this.renderView(this.view_group, this.data, false);
@@ -158,15 +191,17 @@
 
             renderView: function (group, data, isadd) {
 
+                var userdata = {};
                 for (var i = 0; i < group.length; i++) {
-
+                    userdata = getValueByKeyPath(data, group[i].view['_keypath'].length == 0 ? null : group[i].view['_keypath'].split("."));
                     if (group[i].type == _r_data_tag) {
-                        this.showValue(group[i].view, group[i].key, data, group[i].default);
+
+                        this.showValue(group[i].view, group[i].key, userdata, group[i].default);
                     } else if (group[i].type == _r_list_tag) {
 
-                        var listdata = data[group[i].key];
+                        var listdata = userdata[group[i].key];
 
-                        if (listdata === undefined || listdata === null || listdata.length==0) {
+                        if (listdata === undefined || listdata === null || listdata.length == 0) {
 
                             group[i].view.appendChild(group[i].empty_view);
                             group[i].view['is_empty'] = true;
@@ -212,15 +247,15 @@
 
                         }
                     } else if (group[i].type == _r_display) {
-                        this.displayView(group[i].view, group[i].key, data);
+                        this.displayView(group[i].view, group[i].key, userdata);
                     } else if (group[i].type == _r_click_function) {
-                        this.clickFunction(group[i].view, group[i].key, data);
+                        this.clickFunction(group[i].view, group[i].key, userdata);
                     } else if (group[i].type == _r_click_change) {
-                        this.clickChange(group[i].view, group[i].key, data);
+                        this.clickChange(group[i].view, group[i].key, userdata);
                     } else if (group[i].type == _r_style) {
-                        this.viewStyle(group[i].view, group[i].key, data);
+                        this.viewStyle(group[i].view, group[i].key, userdata);
                     } else if (group[i].type == "attr") {
-                        this.viewAttr(group[i].view, group[i].key, data, group[i].attr_name);
+                        this.viewAttr(group[i].view, group[i].key, userdata, group[i].attr_name);
                     }
                 }
             },
@@ -231,13 +266,13 @@
 
                 if (v == undefined || v == "undefined") {
                     if (defaultvalue) {
-                        v = $templateParser(defaultvalue,data);
+                        v = $templateParser(defaultvalue, data);
                     }
                     if (v == undefined || v == "undefined") {
                         v = "";
                     }
                 }
-                if (v.length>0) {
+                if (v.length > 0) {
                     var tagname = view.tagName.toLowerCase();
                     if (tagname == "input") {
                         view.value = v;
@@ -333,11 +368,23 @@
 
         function getOneItem(groupobj, item) {
 
-            //  console.log(node.tagName);
+            //  console.log(item["_keypath"]);
             var key = item.getAttribute(_r_data_tag);
 
             if (key) {
-                groupobj.push({type: _r_data_tag, view: item, key: key, default: item.getAttribute(_r_default)});
+               // console.log(key+":"+item.childElementCount);
+                if (item.childElementCount > 0) {
+
+                    if(key.indexOf("{")>-1)
+                    {
+                        key = key.substring(1,key.length-1);
+                    }
+
+                    item["_keypath"] = item["_keypath"] ? (item["_keypath"].length == 0 ? key : (item["_keypath"] + "." + key)) : key;
+                    return false;
+                } else {
+                    groupobj.push({type: _r_data_tag, view: item, key: key, default: item.getAttribute(_r_default)});
+                }
 
 
             } else {
@@ -413,7 +460,7 @@
 
         }
 
-
+        root['_keypath'] = "";
         var rView = [], groups = [{obj: rView, root: root}];
 
         while (groups.length > 0) {
@@ -434,6 +481,7 @@
                 if (item.nodeType === 1) {
                     //递归先序遍历子节点
                     // console.log(item);
+                    item['_keypath'] = node['_keypath'];
                     groups.push({obj: subgroup.obj, root: item});
                     //getOneItem(subgroup.obj, item);
 

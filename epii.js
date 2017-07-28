@@ -197,7 +197,7 @@
                     userdata = getValueByKeyPath(data, group[i].view['_keypath'].length == 0 ? null : group[i].view['_keypath'].split("."));
                     if (group[i].type == _r_data_tag) {
 
-                        this.showValue(group[i].view, group[i].key, userdata, group[i].default);
+                        this.showValue(group[i].view, group[i].key, userdata, group[i]['d_v']);
                     } else if (group[i].type == _r_list_tag) {
 
                         var listdata = userdata[group[i].key];
@@ -383,7 +383,7 @@
                     item["_keypath"] = item["_keypath"] ? (item["_keypath"].length == 0 ? key : (item["_keypath"] + "." + key)) : key;
                     return false;
                 } else {
-                    groupobj.push({type: _r_data_tag, view: item, key: key, default: item.getAttribute(_r_default)});
+                    groupobj.push({type: _r_data_tag, view: item, key: key, d_v: item.getAttribute(_r_default)});
                 }
 
 
@@ -521,7 +521,7 @@
             return epii;
         });
     } else {
-         
+
         this.epii = epii;
     }
 }).call(this || (typeof window !== 'undefined' ? window : global));

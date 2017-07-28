@@ -451,7 +451,7 @@
                 name = attrs[i].nodeName;
                 if (name.indexOf("r-") !== 0) {
                     value = attrs[i].nodeValue;
-                    if (  value && (value.indexOf("{") !== -1) ) {
+                    if (  value && value.indexOf &&  (value.indexOf("{") !== -1) ) {
                         obj.push({type: "attr", view: item, key: value, "attr_name": name});
                     }
                 }

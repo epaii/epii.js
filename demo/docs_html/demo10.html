@@ -9,8 +9,8 @@
 <div id="content">
     <h1 r-data="title" >  </h1>
     <div r-list="users">
-        <div r-display="{item_type}-1==0" style="background-color: blueviolet">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
-        <div r-display="{item_type}-2==0" style="background-color: red">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+        <div r-display="{item_type}-1==0" r-style="background-color: blueviolet">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+        <div r-display="{item_type}-2==0" r-style="background-color: red">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
         <div r-empty="1" style="background-color: cadetblue">没有数据的时候显示</div>
     </div>
 </div>

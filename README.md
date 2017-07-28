@@ -22,6 +22,14 @@
 ```
 自然数e，圆周率π，虚数单位i，三者合在一起组成 epii。
 ```
+# 兼容性
+  兼容 Chrome，IE8及以上，火狐，Safari，Opera 及其它主流浏览器。
+	
+## 特别提示
+由于 `Ie` 对 `dom style` 属性的局限性，在ie中 `style` 中含有变量必须改用 `r-style` 标签代替，如 `r-style="display:{show}" `
+
+
+
 # 文档目录
 1. [如何使用，并写出第一个程序](#第一个程序)
 2. 数据与模板的绑定
@@ -93,8 +101,8 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
 ## 示例
 ```javascript
 <div id="content">
-    <span r-data='您好，我是{name}' style='font-size:{font}'></span>
-    <div style="background-color: {bgcolor}">
+    <span r-data='您好，我是{name}' r-style='font-size:{font}'></span>
+    <div r-style="background-color: {bgcolor}">
         我的Logo是:<br><img r-data="logo_img">
     </div>
 
@@ -124,6 +132,9 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
 
 </script>
 ```
+## 特别提示
+由于 `Ie` 对 `dom style` 属性的局限性，在ie中 `style` 中含有变量必须改用 `r-style` 标签代替，如 `r-style="display:{show}" `  `r-style` 支持所有浏览器。 
+
 > 点击查看效果[demo2.html][demo2.html]
 
 # 变量的解析（高级）
@@ -136,7 +147,7 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
 ```html
  <!-- 不设置空间的写法-->
 <div>
-        <p>title:<span r-data="{info.title}" style="color:{info.title_color}"></span></p>
+        <p>title:<span r-data="{info.title}" r-style="color:{info.title_color}"></span></p>
         <p>subject:<span r-data="{info.subject}"></span></p>
         <div>
             作者信息: name:<span r-data="{info.author.name}"></span>,sex:<span r-data="{info.author.sex}"></span>
@@ -150,8 +161,8 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
 
 ```html
 <!--r-data 设置变量空间 设置空间为 info,在空间内部 info.title 直接写 title就可以 的写法-->
-<div r-data="{info}" style="background: cadetblue">
-        <p>title:<span r-data="{title}" style="color:{title_color}"></span></p>
+<div r-data="{info}" r-style="background: cadetblue">
+        <p>title:<span r-data="{title}" r-style="color:{title_color}"></span></p>
         <p>subject:<span r-data="{subject}"></span></p>
         <div r-data="author">
             作者信息: name:<span r-data="name"></span>,sex:<span r-data="{sex}"></span>
@@ -165,7 +176,7 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
 <div id="content">
     <!-- 不设置空间的写法-->
     <div>
-        <p>title:<span r-data="{info.title}" style="color:{info.title_color}"></span></p>
+        <p>title:<span r-data="{info.title}" r-style="color:{info.title_color}"></span></p>
         <p>subject:<span r-data="{info.subject}"></span></p>
         <div>
             作者信息: name:<span r-data="{info.author.name}"></span>,sex:<span r-data="{info.author.sex}"></span>
@@ -174,7 +185,7 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
 
     <!--r-data 设置变量空间 设置空间为 info,在空间内部 info.title 直接写 title就可以 的写法-->
     <div r-data="{info}" style="background: cadetblue">
-        <p>title:<span r-data="{title}" style="color:{title_color}"></span></p>
+        <p>title:<span r-data="{title}" r-style="color:{title_color}"></span></p>
         <p>subject:<span r-data="{subject}"></span></p>
         <div r-data="author">
             作者信息: name:<span r-data="name"></span>,sex:<span r-data="{sex}"></span>
@@ -215,14 +226,14 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
 ---
  *epii.js* 提共两种方式设置dom节点隐藏和显示。
  
- * 方法1 `style="display: {h1_display}"`  通过style属性来控制。
+ * 方法1 `r-style="display: {h1_display}"`  通过style属性来控制。
  * 方法2 通过 `r-display` 标签来设定。 `r-display="{img_show}-1==0"`，必须为bool 等式字符串 ，推荐使用这种方式
  * 两种方法都支持变量空间
 
 
 ```javascript
 <div id="content">
-    <h1 r-data="title" style="display: {h1_display}"> <!--第一种方法，直接在style中 用变量，不推荐-->
+    <h1 r-data="title" r-style="display: {h1_display}"> <!--第一种方法，直接在style中 用变量，不推荐-->
     </h1>
     <br>
     <img r-data="img_url" r-display="{img_show}-1==0"><!--第二种方法，使用 r-display 标签，推荐-->
@@ -351,8 +362,8 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
 <div id="content">
     <h1 r-data="title" > </h1>
     <div r-list="users">
-        <div r-display="{item_type}-1==0" style="background-color: blueviolet">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
-        <div r-display="{item_type}-2==0" style="background-color: red">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+        <div r-display="{item_type}-1==0" r-style="background-color: blueviolet">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+        <div r-display="{item_type}-2==0" r-style="background-color: red">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
     </div>
 </div>
 <script>
@@ -382,8 +393,8 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
 <div id="content">
     <h1 r-data="title" >  </h1>
     <div r-list="users">
-        <div r-display="{item_type}-1==0" style="background-color: blueviolet">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
-        <div r-display="{item_type}-2==0" style="background-color: red">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+        <div r-display="{item_type}-1==0" r-style="background-color: blueviolet">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+        <div r-display="{item_type}-2==0" r-style="background-color: red">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
     </div>
 </div>
 <script>
@@ -421,8 +432,8 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
 <div id="content">
     <h1 r-data="title" >  </h1>
     <div r-list="users">
-        <div r-display="{item_type}-1==0" style="background-color: blueviolet">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
-        <div r-display="{item_type}-2==0" style="background-color: red">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+        <div r-display="{item_type}-1==0" r-style="background-color: blueviolet">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+        <div r-display="{item_type}-2==0" r-style="background-color: red">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
         <div r-empty="1" style="background-color: cadetblue">没有数据的时候显示</div>
     </div>
 </div>
@@ -463,8 +474,8 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
 <div id="content">
     <h1 r-data="title" >  </h1>
     <div r-list="users">
-        <div r-display="{item_type}-1==0" style="background-color: blueviolet">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
-        <div r-display="{item_type}-2==0" style="background-color: red">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+        <div r-display="{item_type}-1==0" r-style="background-color: blueviolet">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+        <div r-display="{item_type}-2==0" r-style="background-color: red">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
     </div>
 </div>
 <script>
@@ -499,10 +510,10 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
 
     </div>
     <div r-click-change="http://www.baidu.cc/?a={name}">click_to_change</div>
-    <div r-data="show_name" r-display="{isshow}-1==0" style="background-color: green">
+    <div r-data="show_name" r-display="{isshow}-1==0" r-style="background-color: green">
 
     </div>
-    <div r-data="{hebei}" r-data-default="默认值{name}"  style="width:{width}px;height:{height}px;background-color:{bgcolor};display: {display}" >
+    <div r-data="{hebei}" r-data-default="默认值{name}"  r-style="width:{width}px;height:{height}px;background-color:{bgcolor};display: {display}" >
 
     </div>
     <div r-data="{map.age}"  r-display="{map.show}-1==0" >
@@ -522,7 +533,7 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
             <div> 二级列表：</div>
             <div r-list="wanju">
                 <span r-data="name" r-display="{moban}-1==0"></span>
-                <span r-data="name" style="color: blue" r-display="{moban}-2==0"
+                <span r-data="name" r-style="color: blue" r-display="{moban}-2==0"
                       r-click-change="http://www.ddle.cc/?a={a}">
                     </span>
             </div>

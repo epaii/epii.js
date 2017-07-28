@@ -452,7 +452,7 @@
                 obj.push({type: _r_style, view: item, key: key});
             }
 
-
+            //console.log(item.attributes);
             var attrs = item.attributes, name, value;
             for (var i = 0; i < attrs.length; i++) {
                 name = attrs[i].nodeName;

@@ -9,7 +9,7 @@
 <div id="content">
     <!-- 不设置空间的写法-->
     <div>
-        <p>title:<span r-data="{info.title}" style="color:{info.title_color}"></span></p>
+        <p>title:<span r-data="{info.title}" r-style="color:{info.title_color}"></span></p>
         <p>subject:<span r-data="{info.subject}"></span></p>
         <div>
             作者信息: name:<span r-data="{info.author.name}"></span>,sex:<span r-data="{info.author.sex}"></span>
@@ -18,7 +18,7 @@
 
     <!--r-data 设置变量空间 设置空间为 info,在空间内部 info.title 直接写 title就可以 的写法-->
     <div r-data="{info}" style="background: cadetblue">
-        <p>title:<span r-data="{title}" style="color:{title_color}"></span></p>
+        <p>title:<span r-data="{title}" r-style="color:{title_color}"></span></p>
         <p>subject:<span r-data="{subject}"></span></p>
         <div r-data="author">
             作者信息: name:<span r-data="name"></span>,sex:<span r-data="{sex}"></span>

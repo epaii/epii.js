@@ -103,7 +103,7 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
     </p>
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+    var myepii = epii(document.getElementById("content")); 
 
     myepii.setData({
         name: "epii.js",
@@ -181,7 +181,7 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
     </div>
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
+    var myepii = epii(document.getElementById("content")); 
 
     myepii.setData({
         info: {
@@ -386,7 +386,7 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
     </div>
 </div>
 <script>
-    var myepii = epii(document.getElementById("content"));//初始化引擎，需要指定dom节点 可以是 body
+    var myepii = epii(document.getElementById("content")); 
     myepii.setData({
         title: "列表展示",
         users:[

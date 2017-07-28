@@ -7,17 +7,18 @@
  * myepii.addData();//追加数据
  *
  * console.log(myepii.getDataValue("name"));
-    console.log(myepii.getDataValue("list",1,"age"));
-    console.log(myepii.getDataValue("list",4,"wanju",1,"name"));
+ console.log(myepii.getDataValue("list",1,"age"));
+ console.log(myepii.getDataValue("list",4,"wanju",1,"name"));
  *
  */
 
-!(function (window) {
+;(function () {
 
-    var _r_data_tag = "r-data", _r_list_tag = 'r-list', _r_display = 'r-display', _r_click_function = 'r-click-function', _r_click_change = 'r-click-change', _in_it_common = "_in_it_common", _r_style = "r-style", _r_empty = "r-empty", _r_default = "r-data-default", document = window.document;
+
+    var _r_data_tag = "r-data", _r_list_tag = 'r-list', _r_display = 'r-display', _r_click_function = 'r-click-function', _r_click_change = 'r-click-change', _in_it_common = "_in_it_common", _r_style = "r-style", _r_empty = "r-empty", _r_default = "r-data-default";
 
     var click_change_function = function (url) {
-        window.location.href = url;
+        this.location.href = url;
     }, enable_r_tag_show = false, $_templateParser = null;
 
     function getValueByKeyPath(data, keypaths) {
@@ -372,12 +373,11 @@
             var key = item.getAttribute(_r_data_tag);
 
             if (key) {
-               // console.log(key+":"+item.childElementCount);
+                // console.log(key+":"+item.childElementCount);
                 if (item.childElementCount > 0) {
 
-                    if(key.indexOf("{")>-1)
-                    {
-                        key = key.substring(1,key.length-1);
+                    if (key.indexOf("{") > -1) {
+                        key = key.substring(1, key.length - 1);
                     }
 
                     item["_keypath"] = item["_keypath"] ? (item["_keypath"].length == 0 ? key : (item["_keypath"] + "." + key)) : key;
@@ -513,6 +513,16 @@
         $_templateParser = f;
         return epii;
     };
-    window.epii = epii;
 
-})(this);
+    if (typeof module !== 'undefined' && typeof exports === 'object') {
+        module.exports = epii;
+    } else if (typeof define === 'function' && (define.amd || define.cmd)) {
+        define(function () {
+            return epii;
+        });
+    } else {
+         
+        this.epii = epii;
+    }
+}).call(this || (typeof window !== 'undefined' ? window : global));
+

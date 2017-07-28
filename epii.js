@@ -36,6 +36,10 @@
         return out;
     }
 
+    function hasAttribute(attrName) {
+        return typeof this[attrName] !== 'undefined';
+    }
+
     function $templateParser(key, data) {
         if (data == undefined || data == null) {
             return null;
@@ -396,6 +400,9 @@
                     for (var h = 0; h < item.childNodes.length; h++) {
                         if (item.childNodes[h].nodeType === 1) {
 
+                            if (!item.childNodes[h].hasAttribute) {
+                                item.childNodes[h].hasAttribute = hasAttribute;
+                            }
                             if (item.childNodes[h].hasAttribute(_r_empty)) {
                                 onnode.empty_view = item.childNodes[h];
                             } else
@@ -451,7 +458,7 @@
                 name = attrs[i].nodeName;
                 if (name.indexOf("r-") !== 0) {
                     value = attrs[i].nodeValue;
-                    if (  value && value.indexOf &&  (value.indexOf("{") !== -1) ) {
+                    if (value && value["substring"] && (value.indexOf("{") !== -1)) {
                         obj.push({type: "attr", view: item, key: value, "attr_name": name});
                     }
                 }

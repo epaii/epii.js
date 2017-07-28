@@ -11,18 +11,18 @@
 ---
 
 
-#特性
+# 特性
 ------
 1. 一个轻量级模板引擎，可快速实现数据与ui绑定（数据变动，UI自动变动），快速实现事件绑定和处理，**不依赖任何第三方库,仅仅8k**。
 2. 可快速应用于**web开发**,**native+webapp**开发,**h5**微网页开发,不与其它框架冲突。
 3. **让开发者更多关注与应用本身，而不用花费大量时间实现数据与ui的，和事件处理。效率大幅度提升。**
 
-#名字由来
+# 名字由来
 
 ```
 自然数e，圆周率π，虚数单位i，三者合在一起组成 epii。
 ```
-#文档目录
+# 文档目录
 1. [如何使用，并写出第一个程序](#第一个程序)
 2. 数据与模板的绑定
 	* [变量的解析(基础)](#变量的解析基础)
@@ -36,7 +36,7 @@
 	* [列表(空数据)](#空数据)
 4. [数据的获取](#数据获取获取已设置的数据)
 
-#第一个程序
+# 第一个程序
 ---
 
 1.下载 [**epii.min.js**][epiijslink],并在网页中引用
@@ -78,9 +78,9 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
 ```
 > 点击查看效果[demo1.html][demo1.html]
 
-#变量的解析（基础）
+# 变量的解析（基础）
 ---
-##特性(重点)
+## 特性(重点)
 * 变量在模板中一般用 *{}* 表示。**如{a},{b}**
 * 变量只能在dom标签属性中使用。如 *style="width:{width}"*
 * *r-data* 标签是epii.js自定义最重要的一个标签。一般用来赋值。
@@ -90,7 +90,7 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
 * *r-data-default* 标签，是当*r-data*标签值得变量在没有数据时候显示默认值。
 * `r-data="title"`  和 `r-data="{title}"` 的区别是，在`title`值不存在时，第一种情况 将显示 title 字符串，第二种情况 显示空，如果第二种情况设置了r-data-default 则显示其设置的默认值。
 
-##示例
+## 示例
 ```javascript
 <div id="content">
     <span r-data='您好，我是{name}' style='font-size:{font}'></span>
@@ -126,7 +126,7 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
 ```
 > 点击查看效果[demo2.html][demo2.html]
 
-#变量的解析（高级）
+# 变量的解析（高级）
 ---
 * 支持链条式变量，如*{info.name}*,*{info.user.sex}*
 * *r-data* 可定义变量空间。可大幅度简化变量写法。
@@ -211,7 +211,7 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
 ```
 > 点击查看效果[demo3.html][demo3.html]
 
-#节点的隐藏和显示
+# 节点的隐藏和显示
 ---
  *epii.js* 提共两种方式设置dom节点隐藏和显示。
  
@@ -249,7 +249,7 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
 ```
 > 点击查看效果[demo4.html][demo4.html]
 
-#事件
+# 事件
 ---
 * 1、dom 事件，仍可通过常规设置来实现，如 `onclick="fun('{name}','{age}')"` 
 	`onblur="myblur('{name}','{age}')"`  
@@ -449,11 +449,11 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
 ```
 > 点击查看效果[demo10.html][demo10.html]
 
-#数据获取，获取已设置的数据
+# 数据获取，获取已设置的数据
 ---
 ``` getData,getDataValue两个方法```
 
-###特性
+### 特性
 
 * 通过 *`epii.js`* 的 `getData` 方法 可以获取所有设置的数据
 * 通过  epii的 `getDataValue` 方法 可以快速获取已设置的数据，`getDataValue` 支持多参数，链条`key`
@@ -489,7 +489,7 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
 > 点击查看效果[demo11.html][demo11.html]
 
 
-#一个复杂的demo，几乎涉及所有语法
+# 一个复杂的demo，几乎涉及所有语法
 ---
 
 ```html

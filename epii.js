@@ -18,7 +18,11 @@
     var _r_data_tag = "r-data", _r_list_tag = 'r-list', _r_display = 'r-display', _r_click_function = 'r-click-function', _r_click_change = 'r-click-change', _in_it_common = "_in_it_common", _r_style = "r-style", _r_empty = "r-empty", _r_default = "r-data-default";
 
     var click_change_function = function (url) {
-        this.location.href = url;
+        if(window)
+            window.location.href = url;
+        else{
+            console.log("请使用epii.setClickToChangeFunction设置点击事件");
+        }
     }, enable_r_tag_show = false, $_templateParser = null;
 
     function getValueByKeyPath(data, keypaths) {

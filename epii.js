@@ -137,6 +137,7 @@
                 while (datagroup.length > 0) {
                     var subdata = datagroup.shift();
 
+
                     for (var index in subdata.data) {
 
                         if (( subdata.data[index] instanceof Array) || (!subdata.data[index]) || (!(subdata.data[index] instanceof Object) )) {
@@ -208,14 +209,6 @@
                         this.showValue(group[i].view, group[i].key, userdata, group[i]['d_v']);
                     } else if (group[i].type == _r_list_tag) {
 
-                        var listdata = userdata[group[i].key];
-
-                        if (listdata === undefined || listdata === null || listdata.length == 0) {
-
-                            group[i].view.appendChild(group[i].empty_view);
-                            group[i].view['is_empty'] = true;
-                            return;
-                        }
 
                         if ((!isadd) || group[i].view['is_empty']) {
                             while (group[i].view.hasChildNodes()) //当div下还存在子节点时 循环继续
@@ -223,6 +216,21 @@
                                 group[i].view.removeChild(group[i].view.firstChild);
                             }
                         }
+
+                        var listdata = userdata[group[i].key];
+
+                        if (listdata === undefined || listdata === null || listdata.length == 0) {
+
+                            if(group[i].empty_view)
+                            {
+                                group[i].view.appendChild(group[i].empty_view);
+                            }
+
+                            group[i].view['is_empty'] = true;
+                            return;
+                        }
+
+
                         group[i].view['is_empty'] = false;
                         var template_index = 0;
                         var template_display_string = [];

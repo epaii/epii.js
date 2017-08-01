@@ -52,6 +52,13 @@
 ```html
 <script src="path/to/epii.min.js"></script>
 ```
+> 如果在nodejs环境中使用，可以通过npm包管理安装
+
+```
+npm install epii.js
+```
+
+
 2.编写一个最简单模板
 
 ```html
@@ -590,6 +597,7 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
             isshow: 0
         });
         setTimeout(function () {
+        
             myepii.addData({//追加已有数据，列表将被追加，其它类型直接覆盖
                 "hebei":"河北石家庄",
                  "display":"none",

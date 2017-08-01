@@ -221,12 +221,14 @@
 
                         if (listdata === undefined || listdata === null || listdata.length == 0) {
 
-                            if(group[i].empty_view)
+                            if( (!isadd) &&   (!group[i].view['is_empty']) && group[i].empty_view)
                             {
                                 group[i].view.appendChild(group[i].empty_view);
+                                group[i].view['is_empty'] = true;
+
                             }
 
-                            group[i].view['is_empty'] = true;
+
                             return;
                         }
 

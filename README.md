@@ -338,14 +338,18 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
 # 列表
 ---
 ### 基础
->  *epii.js* 通过自定义标签 *`r-list`* 来设置此dom节点将显示列表， 在列表节点内的 变量 将自切换为 列表某一项数据。
->  支持多级列表展示
+*  *epii.js* 通过自定义标签 *`r-list`* 来设置此dom节点将显示列表， 在列表节点内的 变量 将自切换为 列表某一项数据。
+*  支持多级列表展示
+*  如果数据为纯字符串数组，则值用`value`表示
  
 ```javascript
 <div id="content">
     <h1 r-data="title" >  </h1>
     <div r-list="users">
         <div>名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+    </div>
+     <div r-list="strings">
+        <div>value:<span r-data="value"></span></div>
     </div>
 </div>
 <script>
@@ -355,7 +359,8 @@ var myepii = epii(document.getElementById("content"))//初始化epii对象，需
         users:[
             {name:"张三",age:"12岁"},
             {name:"李四",age:"14岁"}
-        ]
+        ],
+         strings:["string1","string2","string3"]
     });
 
 </script>

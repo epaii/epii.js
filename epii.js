@@ -18,9 +18,9 @@
     var _r_data_tag = "r-data", _r_list_tag = 'r-list', _r_display = 'r-display', _r_click_function = 'r-click-function', _r_click_change = 'r-click-change', _in_it_common = "_in_it_common", _r_style = "r-style", _r_empty = "r-empty", _r_default = "r-data-default";
 
     var click_change_function = function (url) {
-        if(window)
+        if (window)
             window.location.href = url;
-        else{
+        else {
             console.log("请使用epii.setClickToChangeFunction设置点击事件");
         }
     }, enable_r_tag_show = false, $_templateParser = null;
@@ -221,8 +221,7 @@
 
                         if (listdata === undefined || listdata === null || listdata.length == 0) {
 
-                            if( (!isadd) &&   (!group[i].view['is_empty']) && group[i].empty_view)
-                            {
+                            if ((!isadd) && (!group[i].view['is_empty']) && group[i].empty_view) {
                                 group[i].view.appendChild(group[i].empty_view);
                                 group[i].view['is_empty'] = true;
 
@@ -244,11 +243,18 @@
                             }
 
                         }
-                        for (var j = 0; j < listdata.length; j++) {
+                        for (var j = 0, item = {}; j < listdata.length; j++) {
+
+                            if (typeof listdata[j] == "string") {
+                                item = {value: listdata[j]}
+                            } else {
+                                item = listdata[j];
+                            }
+
                             for (he = 0; he < template_display_string.length; he++) {
                                 rdisplay = template_display_string[he];
 
-                                if ((rdisplay !== null) && this.getBool(rdisplay, listdata[j])) {
+                                if ((rdisplay !== null) && this.getBool(rdisplay, item)) {
                                     template_index = he;
                                     break;
                                 }
@@ -258,7 +264,7 @@
                             var clone = group[i].template[template_index].view.cloneNode(true);
 
                             var groups = get_group_from_dom(clone);
-                            this.renderView(groups, listdata[j]);
+                            this.renderView(groups, item);
 
                             //  console.log(clone.onclick);
                             group[i].view.appendChild(clone);

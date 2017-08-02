@@ -11,6 +11,9 @@
     <div r-list="users">
         <div>名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
     </div>
+    <div r-list="strings">
+        <div>value:<span r-data="value"></span></div>
+    </div>
 </div>
 <script>
     var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
@@ -20,7 +23,8 @@
         users:[
             {name:"张三",age:"12岁"},
             {name:"李四",age:"14岁"}
-        ]
+        ],
+        strings:["string1","string2","string3"]
     });
 
 </script>

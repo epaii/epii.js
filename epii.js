@@ -314,9 +314,19 @@
                 var string = $templateParser(value, data);
 
                 if (string.indexOf("{") == -1) {
+
                     if (eval(string)) {
-                        view.style.display = "block";
+                        if (view.style.display == "none") {
+                            if (view.displayValue) {
+                                view.style.display = view.displayValue;
+                            } else
+                                view.style.display = "block";
+                        }
+
                     } else {
+                        if (view.style.display != "none") {
+                            view.displayValue = view.style.display;
+                        }
                         view.style.display = "none";
                     }
                 }

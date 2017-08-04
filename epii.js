@@ -45,8 +45,8 @@
     }
 
     function $templateParser(key, data) {
-        if (data == undefined || data == null) {
-            return null;
+        if (data === undefined || data === null) {
+            return undefined;
         }
         var value = "";
         if (key && key.indexOf("{") != -1) {
@@ -58,8 +58,12 @@
 
 
                 var out = getValueByKeyPath(data, key_path);
-
-                if (out != undefined && out != null) {
+                // console.log(key_path);
+                // console.log(out);
+                if (out === null) {
+                    return null;
+                }
+                if (out != undefined) {
                     return out;
                 } else {
                     if ($_templateParser) {
@@ -80,7 +84,12 @@
             }
         }
 
-
+        if (value == "null") {
+            return null;
+        }
+        if (value == "undefined") {
+            return undefined;
+        }
         return value;
 
     }
@@ -289,23 +298,27 @@
 
                 var v = $templateParser(value, data);
 
-                if (v == undefined || v == "undefined") {
+                if (v === null) {
+
+                    v = "";
+                } else if (v === undefined || v == "undefined") {
                     if (defaultvalue) {
                         v = $templateParser(defaultvalue, data);
                     }
-                    if (v == undefined || v == "undefined") {
+                    if (v === undefined || v == "undefined") {
                         v = "";
                     }
                 }
-                if (v.length > 0) {
-                    var tagname = view.tagName.toLowerCase();
-                    if (tagname == "input") {
-                        view.value = v;
-                    } else if (tagname == "img") {
-                        view.src = v;
-                    } else
-                        view.innerHTML = v;
-                }
+
+
+                var tagname = view.tagName.toLowerCase();
+                if (tagname == "input") {
+                    view.value = v;
+                } else if (tagname == "img") {
+                    view.src = v;
+                } else
+                    view.innerHTML = v;
+
                 if (!enable_r_tag_show)
                     view.removeAttribute(_r_data_tag);
             },

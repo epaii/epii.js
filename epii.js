@@ -314,9 +314,10 @@
                 var string = $templateParser(value, data);
 
                 if (string.indexOf("{") == -1) {
+                    var viewstyle = view.currentStyle ? view.currentStyle : document.defaultView.getComputedStyle(view, null);
 
                     if (eval(string)) {
-                        if (view.style.display == "none") {
+                        if (viewstyle["display"] == "none") {
                             if (view.displayValue) {
                                 view.style.display = view.displayValue;
                             } else
@@ -324,11 +325,14 @@
                         }
 
                     } else {
-                        if (view.style.display != "none") {
-                            view.displayValue = view.style.display;
+
+                        if (viewstyle["display"] != "none") {
+                            view.displayValue = viewstyle["display"];
                         }
                         view.style.display = "none";
                     }
+
+
                 }
                 if (!enable_r_tag_show)
                     view.removeAttribute(_r_display);

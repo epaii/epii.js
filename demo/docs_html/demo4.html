@@ -4,16 +4,23 @@
     <meta charset="UTF-8">
     <title>显示与隐藏</title>
     <script src="../../epii.js"></script>
+    <style>
+        .img1 {
+            display: inline;
+        }
+    </style>
 </head>
 <body>
 <div id="content">
     <h1 r-data="title" r-style="display: {h1_display}"> <!--第一种方法，直接在style中 用变量，不推荐-->
     </h1>
     <br>
-    <img r-data="img_url" r-display="{img_show}-1==0" style="display: inline;"><!--第二种方法，使用 r-display 标签，推荐-->
+    <img r-data="img_url" r-display="{img_show}-1==0"  class="img1"><!--第二种方法，使用 r-display 标签，推荐-->
 
 </div>
 <script>
+
+
     var myepii = epii(document.getElementById("content"));
 
     myepii.setData({

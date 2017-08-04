@@ -22,6 +22,8 @@
 ```
 自然数e，圆周率π，虚数单位i，三者合在一起组成 epii。
 ```
+# 特别感谢
+[@foxhunter](https://github.com/foxhunter) ,[我叫张大熊](https://github.com/daxiong123)
 # 兼容性
   兼容 Chrome，IE8及以上，火狐，Safari，Opera 及其它主流浏览器。
 	

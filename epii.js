@@ -254,7 +254,7 @@
                         }
                         for (var j = 0, item = {}; j < listdata.length; j++) {
 
-                            if (typeof listdata[j] == "string") {
+                            if (typeof listdata[j] != "object") {
                                 item = {value: listdata[j]}
                             } else {
                                 item = listdata[j];
@@ -378,6 +378,7 @@
                     for (var i = 1; i < arr.length; i++) {
                         arg.push(arr[i]);
                     }
+                    arg.push(data);
 
                     window[to].apply(view, arg);
                 };

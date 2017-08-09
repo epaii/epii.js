@@ -421,6 +421,7 @@
 
         function getOneItem(groupobj, item) {
 
+            orderAttr(groupobj, item);
             //  console.log(item["_keypath"]);
             var key = item.getAttribute(_r_data_tag);
 
@@ -477,7 +478,7 @@
 
             }
             // console.log(key);
-            orderAttr(groupobj, item);
+
             return false;
 
         }

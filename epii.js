@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Created by MrRen on 2017/7/14.
  * 模板数据绑定和事件绑定的快速实现
  * 不依赖任何第三方库
@@ -12,10 +12,24 @@
  *
  */
 
-;(function () {
+(function () {
 
 
     var _r_data_tag = "r-data", _r_list_tag = 'r-list', _r_display = 'r-display', _r_click_function = 'r-click-function', _r_click_change = 'r-click-change', _in_it_common = "_in_it_common", _r_style = "r-style", _r_empty = "r-empty", _r_default = "r-data-default";
+
+    var setTagPre =function (pre) {
+        if (!pre) return;
+        _r_data_tag = pre+_r_data_tag;
+        _r_list_tag=pre+_r_data_tag;
+        _r_display=pre+_r_display;
+        _r_click_function = pre+_r_click_function;
+        _r_click_change = pre+_r_click_change;
+        _in_it_common = pre+_in_it_common;
+        _r_style=pre+_r_style;
+        _r_empty=pre+_r_empty;
+        _r_default=pre+_r_default;
+    };
+
 
     var click_change_function = function (url) {
         if (window)
@@ -213,6 +227,7 @@
                 var userdata = {};
                 for (var i = 0; i < group.length; i++) {
                     userdata = getValueByKeyPath(data, group[i].view['_keypath'].length == 0 ? null : group[i].view['_keypath'].split("."));
+
                     if (group[i].type == _r_data_tag) {
 
                         this.showValue(group[i].view, group[i].key, userdata, group[i]['d_v']);
@@ -273,8 +288,19 @@
                             var clone = group[i].template[template_index].view.cloneNode(true);
 
                             var groups = get_group_from_dom(clone);
-                            this.renderView(groups, item);
+                            var befor_show = null;after_show = null;
+                            if(befor_show = clone.getAttribute("data-befor-show"))
+                            {
+                                window[befor_show].apply(clone, [clone,item]);
 
+                            }
+                            this.renderView(groups, item);
+                            if( (after_show = clone.getAttribute("data-after-show") )||  (after_show = clone.getAttribute("data-on-show")))
+                            {
+
+                                window[after_show].apply(clone, [clone,item]);
+
+                            }
                             //  console.log(clone.onclick);
                             group[i].view.appendChild(clone);
 
@@ -567,6 +593,10 @@
     };
     epii.setTemplateParser = function (f) {
         $_templateParser = f;
+        return epii;
+    };
+    epii.setTagPre = function (pre) {
+        setTagPre(pre);
         return epii;
     };
 

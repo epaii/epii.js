@@ -3,17 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="../epii.js"></script>
+    <script src="../epii.js?Aa=1"></script>
 </head>
 <body>
 <div id="content">
     <h1 r-data="title" >  </h1>
     <div r-list="users">
-        <div r-display="{item_type}-1==0" style="background-color: blueviolet">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
+        <div r-display="{item_type}-1==0" style="background-color: blueviolet" data-befor-show="befor_show" data-after-show="after_show1">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
         <div r-display="{item_type}-2==0" style="background-color: red">名称<span r-data="name"></span>,年龄<span r-data="age"></span></div>
     </div>
 </div>
 <script>
+    function befor_show(view,data) {
+        alert(this.innerHTML);
+        alert(JSON.stringify(data));
+    }
+    function after_show1(view,data) {
+        alert(this.innerHTML);
+        alert(JSON.stringify(data));
+    }
     var myepii = epii(document.getElementById("content"));//初始化殷勤，需要制定dom节点 可以是 body
     myepii.setData({
         title: "列表展示",

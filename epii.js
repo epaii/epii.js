@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Created by MrRen on 2017/7/14.
  * 模板数据绑定和事件绑定的快速实现
  * 不依赖任何第三方库
@@ -17,17 +17,17 @@
 
     var _r_data_tag = "r-data", _r_list_tag = 'r-list', _r_display = 'r-display', _r_click_function = 'r-click-function', _r_click_change = 'r-click-change', _in_it_common = "_in_it_common", _r_style = "r-style", _r_empty = "r-empty", _r_default = "r-data-default";
 
-    var setTagPre =function (pre) {
+    var setTagPre = function (pre) {
         if (!pre) return;
-        _r_data_tag = pre+_r_data_tag;
-        _r_list_tag=pre+_r_data_tag;
-        _r_display=pre+_r_display;
-        _r_click_function = pre+_r_click_function;
-        _r_click_change = pre+_r_click_change;
-        _in_it_common = pre+_in_it_common;
-        _r_style=pre+_r_style;
-        _r_empty=pre+_r_empty;
-        _r_default=pre+_r_default;
+        _r_data_tag = pre + _r_data_tag;
+        _r_list_tag = pre + _r_data_tag;
+        _r_display = pre + _r_display;
+        _r_click_function = pre + _r_click_function;
+        _r_click_change = pre + _r_click_change;
+        _in_it_common = pre + _in_it_common;
+        _r_style = pre + _r_style;
+        _r_empty = pre + _r_empty;
+        _r_default = pre + _r_default;
     };
 
 
@@ -47,7 +47,7 @@
 
 
         while (i < len) {
-            if (out === undefined)  return null;
+            if (out === undefined) return null;
             out = out[keypaths[i++]];
 
         }
@@ -63,33 +63,32 @@
             return undefined;
         }
         var value = "";
-        if (key && key.indexOf("{") != -1) {
-
+        if (key && key.indexOf("{") !== -1) {
             value = key.replace(/{(.*?)}/gi, function () {
-
                 // console.log(arguments[1]);
                 var key_path = arguments[1].split(".");
-
-
+                /*************below this code after add start***********************/
+                if (key_path.length === 1 && key_path[0] === "object") {
+                    return JSON.stringify(data);
+                }
+                /*************below this code after add end***********************/
                 var out = getValueByKeyPath(data, key_path);
-                // console.log(key_path);
-                // console.log(out);
                 if (out === null) {
                     return null;
                 }
-                if (out != undefined) {
+                if (out !== undefined) {
+                    if(out instanceof Object){
+                        return JSON.stringify(out);
+                    }
                     return out;
                 } else {
                     if ($_templateParser) {
                         return $_templateParser(arguments[1], key_path)
                     }
-
                     return undefined;
                 }
             });
         } else {
-
-
             var out = data[key];
             if (out != undefined && out != null) {
                 value = out;
@@ -119,22 +118,20 @@
                 this.view_group = group;
                 var keytemp;
                 for (var i = 0; i < group.length; i++) {
-
                     if (group[i].key.indexOf("{") != -1) {
                         var keys = group[i].key.match(/{(.*?)}/gi);
                         for (var j = 0; j < keys.length; j++) {
                             keys[j] = keys[j].substring(1, keys[j].length - 1);
-                            keytemp = (group[i].view._keypath.length == 0) ? keys[j] : group[i].view._keypath + "." + keys[j];
-
-                            if (!this.root_key_view[keytemp]) this.root_key_view[keytemp] = [];
+                            keytemp = (group[i].view._keypath.length === 0) ? keys[j] : group[i].view._keypath + "." + keys[j];
+                            if (!this.root_key_view[keytemp]) {
+                                this.root_key_view[keytemp] = [];
+                            }
                             this.root_key_view[keytemp].push(group[i]);
                         }
                     } else {
 
                         keytemp = (group[i].view._keypath.length == 0) ? group[i].key : group[i].view._keypath + "." + group[i].key;
                         if (group[i].type == _r_data_tag || group[i].type == _r_list_tag) {
-
-
                             if (!this.root_key_view[keytemp]) this.root_key_view[keytemp] = [];
                             this.root_key_view[keytemp].push(group[i]);
                         } else {
@@ -150,7 +147,6 @@
                 return this;
             },
             setData: function (data) {
-
                 var group = [];
                 if (this.root_key_view[_in_it_common]) {
                     group = group.concat(this.root_key_view[_in_it_common]);
@@ -159,36 +155,28 @@
                 var tmpkeypath;
                 while (datagroup.length > 0) {
                     var subdata = datagroup.shift();
-
-
                     for (var index in subdata.data) {
-
-                        if (( subdata.data[index] instanceof Array) || (!subdata.data[index]) || (!(subdata.data[index] instanceof Object) )) {
+                        if ((subdata.data[index] instanceof Array) || (!subdata.data[index]) || (!(subdata.data[index] instanceof Object))) {
                             subdata.todata[index] = subdata.data[index];
                             tmpkeypath = subdata.keypath.concat(index).join(".");
-
                             if (this.root_key_view[tmpkeypath])
                                 group = group.concat(this.root_key_view[tmpkeypath]);
                         } else {
                             subdata.todata[index] = {};
-
                             datagroup.push({
                                 todata: subdata.todata[index],
                                 data: subdata.data[index],
                                 keypath: subdata.keypath.concat(index)
                             });
                         }
-
-
                     }
                 }
-
-
                 if (!this.is_data_set) {
                     this.renderView(this.view_group, this.data, false);
                     this.is_data_set = true;
-                } else
+                } else {
                     this.renderView(group, this.data, false);
+                }
                 return this;
 
             },
@@ -223,88 +211,62 @@
             },
 
             renderView: function (group, data, isadd) {
-
                 var userdata = {};
                 for (var i = 0; i < group.length; i++) {
                     userdata = getValueByKeyPath(data, group[i].view['_keypath'].length == 0 ? null : group[i].view['_keypath'].split("."));
-
                     if (group[i].type == _r_data_tag) {
-
                         this.showValue(group[i].view, group[i].key, userdata, group[i]['d_v']);
                     } else if (group[i].type == _r_list_tag) {
-
-
                         if ((!isadd) || group[i].view['is_empty']) {
                             while (group[i].view.hasChildNodes()) //当div下还存在子节点时 循环继续
                             {
                                 group[i].view.removeChild(group[i].view.firstChild);
                             }
                         }
-
                         var listdata = userdata[group[i].key];
-
                         if (listdata === undefined || listdata === null || listdata.length == 0) {
-
                             if ((!isadd) && (!group[i].view['is_empty']) && group[i].empty_view) {
                                 group[i].view.appendChild(group[i].empty_view);
                                 group[i].view['is_empty'] = true;
-
                             }
-
-
-                            return;
+                            // return;
                         }
-
-
                         group[i].view['is_empty'] = false;
                         var template_index = 0;
                         var template_display_string = [];
                         if (group[i].template.length > 0) {
-
                             for (var he = 0; he < group[i].template.length; he++) {
                                 template_display_string.push(group[i].template[he].view.getAttribute(_r_display));
-
                             }
-
                         }
-                        for (var j = 0, item = {}; j < listdata.length; j++) {
 
+                        for (var j = 0, item = {}; listdata && j < listdata.length; j++) {
                             if (typeof listdata[j] != "object") {
                                 item = {value: listdata[j]}
                             } else {
                                 item = listdata[j];
                             }
-
                             for (he = 0; he < template_display_string.length; he++) {
                                 rdisplay = template_display_string[he];
-
                                 if ((rdisplay !== null) && this.getBool(rdisplay, item)) {
                                     template_index = he;
                                     break;
                                 }
                             }
 
-
                             var clone = group[i].template[template_index].view.cloneNode(true);
-
                             var groups = get_group_from_dom(clone);
-                            var befor_show = null;after_show = null;
-                            if(befor_show = clone.getAttribute("data-befor-show"))
-                            {
-                                window[befor_show].apply(clone, [clone,item]);
-
+                            var befor_show = null;
+                            after_show = null;
+                            if (befor_show = clone.getAttribute("data-befor-show")) {
+                                window[befor_show].apply(clone, [clone, item]);
                             }
                             this.renderView(groups, item);
-                            if( (after_show = clone.getAttribute("data-after-show") )||  (after_show = clone.getAttribute("data-on-show")))
-                            {
-
-                                window[after_show].apply(clone, [clone,item]);
-
+                            if ((after_show = clone.getAttribute("data-after-show")) || (after_show = clone.getAttribute("data-on-show"))) {
+                                window[after_show].apply(clone, [clone, item]);
                             }
                             //  console.log(clone.onclick);
                             group[i].view.appendChild(clone);
-
-
                         }
                     } else if (group[i].type == _r_display) {
                         this.displayView(group[i].view, group[i].key, userdata);
@@ -320,12 +282,8 @@
                 }
             },
             showValue: function (view, value, data, defaultvalue) {
-
-
                 var v = $templateParser(value, data);
-
                 if (v === null) {
-
                     v = "";
                 } else if (v === undefined || v == "undefined") {
                     if (defaultvalue) {
@@ -335,8 +293,6 @@
                         v = "";
                     }
                 }
-
-
                 var tagname = view.tagName.toLowerCase();
                 if (tagname == "input") {
                     view.value = v;
@@ -344,14 +300,14 @@
                     view.src = v;
                 } else
                     view.innerHTML = v;
-
                 if (!enable_r_tag_show)
                     view.removeAttribute(_r_data_tag);
             },
             displayView: function (view, value, data) {
-
                 var string = $templateParser(value, data);
-
+                if (string === undefined) {
+                    return;
+                }
                 if (string.indexOf("{") == -1) {
                     var viewstyle = view.currentStyle ? view.currentStyle : document.defaultView.getComputedStyle(view, null);
 
@@ -425,9 +381,7 @@
 
             },
             getBool: function (value, data) {
-
                 var string = $templateParser(value, data);
-
                 if (string.indexOf("{") == -1) {
                     if (eval(string)) {
                         return true;
